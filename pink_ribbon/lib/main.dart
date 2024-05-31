@@ -44,6 +44,14 @@ class HomePage extends StatelessWidget {
             label: 'Info',
           ),
         ],
+        onTap: (index) {
+          if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SelfExaminationScreen()),
+            );
+          }
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -108,7 +116,8 @@ class HomePageContent extends StatelessWidget {
                 height: 200,
                 decoration: BoxDecoration(
                   image: const DecorationImage(
-                    image: NetworkImage('https://example.com/breast_cancer_awareness.jpg'),
+                    image: NetworkImage(
+                        'https://example.com/breast_cancer_awareness.jpg'),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.circular(10),
@@ -151,6 +160,7 @@ class HomePageContent extends StatelessWidget {
 
 class InfoCard extends StatelessWidget {
   final String title;
+
   const InfoCard({super.key, required this.title});
 
   @override
@@ -216,7 +226,8 @@ class FAQScreen extends StatelessWidget {
                   left: 10,
                   child: Chip(
                     avatar: Icon(Icons.info, color: Colors.white),
-                    label: Text('FAQ Image', style: TextStyle(color: Colors.white)),
+                    label: Text('FAQ Image',
+                        style: TextStyle(color: Colors.white)),
                     backgroundColor: Colors.pink,
                   ),
                 ),
@@ -227,18 +238,21 @@ class FAQScreen extends StatelessWidget {
               child: Column(
                 children: [
                   FAQCard(
-                    question: 'What are the benefits of early cancer detection?',
+                    question:
+                        'What are the benefits of early cancer detection?',
                     answer:
                         'Early detection of breast cancer can help reduce the time needed to diagnose and treat patients. Early detection can also help to reduce the spread of the disease.',
                   ),
                   FAQCard(
-                    question: 'Is self scanning sufficient as the sole way to detect breast cancer?',
+                    question:
+                        'Is self scanning sufficient as the sole way to detect breast cancer?',
                     answer:
-                        'Yes, self scanning is sufficient as the sole way to detect breast cancer. However, if you do not have access to a scanner, you may need to use a different method to detect breast cancer.',
+                        'Yes, self scanning is sufficient as the sole way to detect breast cancer.<br>However, if you do not have access to a scanner, you may need to use a different method to detect breast cancer.',
                   ),
                   FAQCard(
                     question: 'Is breast cancer genetic?',
-                    answer: 'No, breast cancer is not genetic. It is a disease that occurs in the cells of the breast.',
+                    answer:
+                        'No, breast cancer is not genetic. It is a disease that occurs in the cells of the breast.',
                   ),
                 ],
               ),
@@ -260,6 +274,7 @@ class FAQScreen extends StatelessWidget {
 class FAQCard extends StatefulWidget {
   final String question;
   final String answer;
+
   const FAQCard({required this.question, required this.answer, super.key});
 
   @override
@@ -288,6 +303,7 @@ class _FAQCardState extends State<FAQCard> {
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
+
   const CustomBottomNavigationBar({required this.currentIndex, super.key});
 
   @override
@@ -319,7 +335,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
           label: 'Search',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.change_history),
+          icon: Icon(Icons.change_history), // This is the triangle icon
           label: 'Profile',
         ),
       ],
@@ -327,83 +343,112 @@ class CustomBottomNavigationBar extends StatelessWidget {
   }
 }
 
-class SelfExamScreen extends StatelessWidget {
-  const SelfExamScreen({super.key});
+
+class SelfExaminationScreen extends StatelessWidget {
+  const SelfExaminationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Self Examination'),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            // Add your onPressed code here!
-          },
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 38.0),
-            child: CircleAvatar(
-              radius: 20.0,
-              backgroundImage: NetworkImage('https://via.placeholder.com/150'),
-            ),
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              // Add your menu item action here
+            },
+            itemBuilder: (BuildContext context) {
+              return {'Settings', 'About'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
           ),
         ],
       ),
-      body: SafeArea(
-        child: ListView(
-          children: [
-            Stack(
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const FAQScreen()),
+          );
+        },
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add),
+      ),
+      body: const Stack(
+        children: [
+          SingleChildScrollView(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 200,
-                  child: Image.asset('images/self_exam.png', fit: BoxFit.cover),
-                ),
-                const Positioned(
-                  bottom: 10,
-                  left: 10,
-                  child: Chip(
-                    avatar: Icon(Icons.info, color: Colors.white),
-                    label: Text('Self Exam Image', style: TextStyle(color: Colors.white)),
-                    backgroundColor: Colors.pink,
+                Center(
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                      'Self Examination Guide',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
+                ),
+                SizedBox(height: 20),
+                Center(
+                  child: RotatedBox(
+                    quarterTurns: 4,
+                    child: Icon(Icons.self_improvement, size: 100, color: Colors.pink),
+                  ),
+                ),
+                SizedBox(height: 20),
+               
+                Text(
+                  'Steps to Perform a Self Examination:',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                Chip(
+                  label: Text('Step 1: Look at your breasts in the mirror.'),
+                  backgroundColor: Colors.pink,
+                ),
+                Chip(
+                  label: Text('Step 2: Raise your arms and look for changes.'),
+                  backgroundColor: Colors.pink,
+                ),
+                Chip(
+                  label: Text('Step 3: Feel your breasts while lying down.'),
+                  backgroundColor: Colors.pink,
+                ),
+                Chip(
+                  label: Text('Step 4: Feel your breasts while standing or sitting.'),
+                  backgroundColor: Colors.pink,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'If you notice any changes, contact your healthcare provider.',
+                  style: TextStyle(fontSize: 16),
                 ),
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  FAQCard(
-                    question: 'How to perform a self-examination?',
-                    answer:
-                        'To perform a self-examination, start by looking at your breasts in the mirror with your shoulders straight and your arms on your hips...',
-                  ),
-                  FAQCard(
-                    question: 'What to look for during a self-examination?',
-                    answer:
-                        'During a self-examination, look for any changes in the size, shape, or appearance of your breasts...',
-                  ),
-                  FAQCard(
-                    question: 'When to consult a doctor?',
-                    answer:
-                        'If you notice any unusual changes or lumps in your breasts, it is important to consult a healthcare provider...',
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        child: const Icon(Icons.navigation),
+          ),
+
+        ],
       ),
     );
   }
