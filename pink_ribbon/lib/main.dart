@@ -25,6 +25,12 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('PinkRibbon'),
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            // Add your onPressed code here!
+          },
+        ),
       ),
       body: const HomePageContent(),
       bottomNavigationBar: BottomNavigationBar(
@@ -38,6 +44,14 @@ class HomePage extends StatelessWidget {
             label: 'Info',
           ),
         ],
+        onTap: (index) {
+          if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SelfExaminationScreen()),
+            );
+          }
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -147,7 +161,7 @@ class HomePageContent extends StatelessWidget {
 class InfoCard extends StatelessWidget {
   final String title;
 
-  const InfoCard({required this.title});
+  const InfoCard({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -224,47 +238,21 @@ class FAQScreen extends StatelessWidget {
               child: Column(
                 children: [
                   FAQCard(
-                    question: 'What is Flutter?',
+                    question:
+                        'What are the benefits of early cancer detection?',
                     answer:
-                        'Flutter is an open-source UI software development kit created by Google.',
+                        'Early detection of breast cancer can help reduce the time needed to diagnose and treat patients. Early detection can also help to reduce the spread of the disease.',
                   ),
                   FAQCard(
-                    question: 'How do I use Flutter?',
+                    question:
+                        'Is self scanning sufficient as the sole way to detect breast cancer?',
                     answer:
-                        'You can use Flutter to develop cross-platform applications for Android, iOS, and more.',
+                        'Yes, self scanning is sufficient as the sole way to detect breast cancer.<br>However, if you do not have access to a scanner, you may need to use a different method to detect breast cancer.',
                   ),
                   FAQCard(
-                    question: 'Why choose Flutter?',
+                    question: 'Is breast cancer genetic?',
                     answer:
-                        'Flutter allows for fast development, expressive and flexible UI, and native performance.',
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  Text(
-                    'Contact Us',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          // Add your onPressed code here!
-                        },
-                        child: const Text('Email'),
-                      ),
-                      OutlinedButton(
-                        onPressed: () {
-                          // Add your onPressed code here!
-                        },
-                        child: const Text('Call'),
-                      ),
-                    ],
+                        'No, breast cancer is not genetic. It is a disease that occurs in the cells of the breast.',
                   ),
                 ],
               ),
@@ -272,22 +260,7 @@ class FAQScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
+      bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Add your onPressed code here!
@@ -323,6 +296,173 @@ class _FAQCardState extends State<FAQCard> {
           ),
         ],
         onExpansionChanged: (bool expanded) {},
+      ),
+    );
+  }
+}
+
+class CustomBottomNavigationBar extends StatelessWidget {
+  final int currentIndex;
+
+  const CustomBottomNavigationBar({required this.currentIndex, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: currentIndex,
+      onTap: (index) {
+        if (index == 0) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+            (route) => false,
+          );
+        } else if (index == 1) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const FAQScreen()),
+            (route) => false,
+          );
+        }
+      },
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.square),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.circle),
+          label: 'Search',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.change_history), // This is the triangle icon
+          label: 'Profile',
+        ),
+      ],
+    );
+  }
+}
+
+
+class SelfExaminationScreen extends StatelessWidget {
+  const SelfExaminationScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Self Examination'),
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              // Add your menu item action here
+            },
+            itemBuilder: (BuildContext context) {
+              return {'Settings', 'About'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Info',
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        child: const Icon(Icons.check),
+      ),
+      body: Stack(
+        children: [
+          const SingleChildScrollView(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                      'Self Examination Guide',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Center(
+                  child: RotatedBox(
+                    quarterTurns: 1,
+                    child: Icon(Icons.self_improvement, size: 100, color: Colors.pink),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Center(
+                  child: Image(
+                    image: NetworkImage('https://example.com/self_exam.png'),
+                    height: 200,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 20.0), // Adjust the value as needed
+                  child: Text(
+                      'Steps to Perform a Self Examination:',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                ),
+                SizedBox(height: 10),
+                Chip(
+                  label: Text('Step 1: Look at your breasts in the mirror.'),
+                  backgroundColor: Colors.pink,
+                ),
+                Chip(
+                  label: Text('Step 2: Raise your arms and look for changes.'),
+                  backgroundColor: Colors.pink,
+                ),
+                Chip(
+                  label: Text('Step 3: Feel your breasts while lying down.'),
+                  backgroundColor: Colors.pink,
+                ),
+                Chip(
+                  label: Text('Step 4: Feel your breasts while standing or sitting.'),
+                  backgroundColor: Colors.pink,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'If you notice any changes, contact your healthcare provider.',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: FloatingActionButton(
+              onPressed: () {
+                // Add your onPressed code here!
+              },
+              child: const Icon(Icons.check),
+            ),
+          ),
+        ],
       ),
     );
   }
