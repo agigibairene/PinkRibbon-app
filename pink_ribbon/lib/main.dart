@@ -171,7 +171,7 @@ class InfoCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.pink[300],
         borderRadius: BorderRadius.circular(10),
-      ),
+      ), // BoxDecoration
       child: Center(
         child: Text(
           title,
@@ -342,6 +342,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
     );
   }
 }
+<<<<<<< HEAD
 
 
 class SelfExaminationScreen extends StatelessWidget {
@@ -467,3 +468,5 @@ class SelfExaminationScreen extends StatelessWidget {
     );
   }
 }
+=======
+>>>>>>> 55ff36b3dbedef30bba1ea45a9e597783e4cea90
