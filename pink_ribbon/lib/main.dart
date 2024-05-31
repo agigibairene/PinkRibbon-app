@@ -25,6 +25,12 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('PinkRibbon'),
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            // Add your onPressed code here!
+          },
+        ),
       ),
       body: const HomePageContent(),
       bottomNavigationBar: BottomNavigationBar(
@@ -147,7 +153,7 @@ class HomePageContent extends StatelessWidget {
 class InfoCard extends StatelessWidget {
   final String title;
 
-  const InfoCard({required this.title});
+  const InfoCard({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -224,47 +230,21 @@ class FAQScreen extends StatelessWidget {
               child: Column(
                 children: [
                   FAQCard(
-                    question: 'What is Flutter?',
+                    question:
+                        'What are the benefits of early cancer detection?',
                     answer:
-                        'Flutter is an open-source UI software development kit created by Google.',
+                        'Early detection of breast cancer can help reduce the time needed to diagnose and treat patients. Early detection can also help to reduce the spread of the disease.',
                   ),
                   FAQCard(
-                    question: 'How do I use Flutter?',
+                    question:
+                        'Is self scanning sufficient as the sole way to detect breast cancer?',
                     answer:
-                        'You can use Flutter to develop cross-platform applications for Android, iOS, and more.',
+                        'Yes, self scanning is sufficient as the sole way to detect breast cancer.<br>However, if you do not have access to a scanner, you may need to use a different method to detect breast cancer.',
                   ),
                   FAQCard(
-                    question: 'Why choose Flutter?',
+                    question: 'Is breast cancer genetic?',
                     answer:
-                        'Flutter allows for fast development, expressive and flexible UI, and native performance.',
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  Text(
-                    'Contact Us',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          // Add your onPressed code here!
-                        },
-                        child: const Text('Email'),
-                      ),
-                      OutlinedButton(
-                        onPressed: () {
-                          // Add your onPressed code here!
-                        },
-                        child: const Text('Call'),
-                      ),
-                    ],
+                        'No, breast cancer is not genetic. It is a disease that occurs in the cells of the breast.',
                   ),
                 ],
               ),
@@ -272,22 +252,7 @@ class FAQScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
+      bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Add your onPressed code here!
@@ -324,6 +289,48 @@ class _FAQCardState extends State<FAQCard> {
         ],
         onExpansionChanged: (bool expanded) {},
       ),
+    );
+  }
+}
+
+class CustomBottomNavigationBar extends StatelessWidget {
+  final int currentIndex;
+
+  const CustomBottomNavigationBar({required this.currentIndex, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: currentIndex,
+      onTap: (index) {
+        if (index == 0) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+            (route) => false,
+          );
+        } else if (index == 1) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const FAQScreen()),
+            (route) => false,
+          );
+        }
+      },
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.square),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.circle),
+          label: 'Search',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.change_history), // This is the triangle icon
+          label: 'Profile',
+        ),
+      ],
     );
   }
 }
