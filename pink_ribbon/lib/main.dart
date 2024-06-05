@@ -38,12 +38,15 @@ class HomePage extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.info),
+            label: 'Info',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.arrow_back),
+            label: 'Back',
           ),
         ],
         onTap: (index) {
