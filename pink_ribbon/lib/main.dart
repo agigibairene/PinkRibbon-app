@@ -28,6 +28,7 @@ class HomePage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {
+            Navigator.pushNamed(context, '/menu');
             // Add your onPressed code here!
           },
         ),
@@ -37,18 +38,20 @@ class HomePage extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.info),
-            label: 'Info',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.arrow_back),
           ),
         ],
         onTap: (index) {
           if (index == 1) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SelfExaminationScreen()),
+              MaterialPageRoute(
+                  builder: (context) => const SelfExaminationScreen()),
             );
           }
         },
@@ -198,6 +201,7 @@ class FAQScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {
+            Navigator.pushNamed(context, '/menu');
             // Add your onPressed code here!
           },
         ),
@@ -220,16 +224,6 @@ class FAQScreen extends StatelessWidget {
                   width: double.infinity,
                   height: 200,
                   child: Image.asset('images/FAQ.png', fit: BoxFit.cover),
-                ),
-                const Positioned(
-                  bottom: 10,
-                  left: 10,
-                  child: Chip(
-                    avatar: Icon(Icons.info, color: Colors.white),
-                    label: Text('FAQ Image',
-                        style: TextStyle(color: Colors.white)),
-                    backgroundColor: Colors.pink,
-                  ),
                 ),
               ],
             ),
@@ -261,12 +255,6 @@ class FAQScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        child: const Icon(Icons.navigation),
-      ),
     );
   }
 }
@@ -285,14 +273,21 @@ class _FAQCardState extends State<FAQCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.pink[50],
+      color: Colors.pink[100 * (index + 2)],
       margin: const EdgeInsets.all(10.0),
       child: ExpansionTile(
-        title: Text(widget.question),
+        title: Text(widget.question,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            )),
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(widget.answer),
+            child: Text(widget.answer,
+                style: const TextStyle(
+                  color: Colors.white,
+                )),
           ),
         ],
         onExpansionChanged: (bool expanded) {},
@@ -342,7 +337,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
     );
   }
 }
-
 
 class SelfExaminationScreen extends StatelessWidget {
   const SelfExaminationScreen({super.key});
@@ -413,11 +407,11 @@ class SelfExaminationScreen extends StatelessWidget {
                 Center(
                   child: RotatedBox(
                     quarterTurns: 4,
-                    child: Icon(Icons.self_improvement, size: 100, color: Colors.pink),
+                    child: Icon(Icons.self_improvement,
+                        size: 100, color: Colors.pink),
                   ),
                 ),
                 SizedBox(height: 20),
-               
                 Text(
                   'Steps to Perform a Self Examination:',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -436,7 +430,8 @@ class SelfExaminationScreen extends StatelessWidget {
                   backgroundColor: Colors.pink,
                 ),
                 Chip(
-                  label: Text('Step 4: Feel your breasts while standing or sitting.'),
+                  label: Text(
+                      'Step 4: Feel your breasts while standing or sitting.'),
                   backgroundColor: Colors.pink,
                 ),
                 SizedBox(height: 20),
@@ -447,7 +442,6 @@ class SelfExaminationScreen extends StatelessWidget {
               ],
             ),
           ),
-
         ],
       ),
     );
