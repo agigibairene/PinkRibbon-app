@@ -26,9 +26,16 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('PinkRibbon'),
-        ),
+        appBar: index == 0
+            ? AppBar(
+                title: Text('Home',
+                    style: TextStyle(
+                      color: Colors.pink,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    )),
+              )
+            : null,
         body: list[index],
         drawer: MyDrawer(onTap: (ctx, i) {
           setState(() {
@@ -300,7 +307,7 @@ class HomePageContent extends StatelessWidget {
                 child: Center(
                   child: Text(
                     'Item $index',
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
                 ),
               );
@@ -319,25 +326,22 @@ class FAQScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('FAQs'),
-        centerTitle: true,
+        title: const Text(
+          'FAQs',
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.pink),
+        ),
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(Icons.menu),
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.pink,
+            ),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
           ),
         ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 38.0),
-            child: CircleAvatar(
-              radius: 20.0,
-              backgroundImage: NetworkImage('https://via.placeholder.com/150'),
-            ),
-          ),
-        ],
       ),
       drawer: MyDrawer(onTap: (ctx, i) {
         Navigator.pop(ctx); // Close the drawer
@@ -373,12 +377,28 @@ class FAQScreen extends StatelessWidget {
                     question:
                         'Is self scanning sufficient as the sole way to detect breast cancer?',
                     answer:
-                        'Yes, self scanning is sufficient as the sole way to detect breast cancer.<br>However, if you do not have access to a scanner, you may need to use a different method to detect breast cancer.',
+                        'Yes, self scanning is sufficient as the sole way to detect breast cancer.However, if you do not have access to a scanner, you may need to use a different method to detect breast cancer.',
+                  ),
+                  FAQCard(
+                    question: 'How do I ensure I dont get breast cancer?',
+                    answer:
+                        'You cant change some risk factors, such as family history. But you can make lifestyle changes to lower your risk. Stay away from alcohol, get active, manage your weight are just but a few.',
                   ),
                   FAQCard(
                     question: 'Is breast cancer genetic?',
                     answer:
-                        'No, breast cancer is not genetic. It is a disease that occurs in the cells of the breast.',
+                        'It is important to note that most women who get breast cancer do not have a family history of the disease. But women who have close blood relatives with breast cancer have a higher risk',
+                  ),
+                  FAQCard(
+                    question:
+                        'How can I get actively involved in breast cancer journey?',
+                    answer:
+                        'Spread the word and talk about it with family, friends and acquaintances. Join conferences and walks, be involved.',
+                  ),
+                  FAQCard(
+                    question: 'Can I get breast cancer after 40 years old?',
+                    answer:
+                        'Yes you can. Any age can get breast cancer. However, you should be aware that the rates of breast cancer increase after 40 years.',
                   ),
                 ],
               ),
@@ -407,11 +427,17 @@ class _FAQCardState extends State<FAQCard> {
       color: Color.fromARGB(255, 218, 65, 116),
       margin: const EdgeInsets.all(10.0),
       child: ExpansionTile(
-        title: Text(widget.question),
+        title: Text(
+          widget.question,
+          style: TextStyle(color: Colors.black),
+        ),
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(widget.answer),
+            child: Text(
+              widget.answer,
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ],
         onExpansionChanged: (bool expanded) {},
