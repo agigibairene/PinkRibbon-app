@@ -199,34 +199,6 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class InfoCard extends StatelessWidget {
-  final String title;
-
-  const InfoCard({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 160.0,
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      decoration: BoxDecoration(
-        color: Colors.pink[300],
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Center(
-        child: Text(
-          title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
-}
-
 class HomePageContent extends StatelessWidget {
   HomePageContent({super.key});
 
@@ -261,18 +233,81 @@ class HomePageContent extends StatelessWidget {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
-          const SizedBox(height: 20),
           Container(
-            height: 150,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: const [
-                InfoCard(title: 'Welcome Page'),
-                InfoCard(title: 'Self Exam'),
-                InfoCard(title: 'SIGN IN'),
+            color: Colors.pink[300],
+            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    height: 4,
+                    width: 80,
+                    color: Colors.pink,
+                    // Thick pink line divider
+                  ),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                          right: 20.0), // Adjust the value as needed
+                      child: Image.asset(
+                        'images/logo.png',
+                        width: 80,
+                        height: 80,
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Pink Ribbon',
+                          style: TextStyle(
+                            color: Colors.pink,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Center(
+                          child: Text(
+                            'Breast health is in your hands.',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Center(
+                  child: Container(
+                    height: 4,
+                    width: 80,
+                    color: Colors.pink,
+                    // Thick pink line divider
+                  ),
+                ),
+                SizedBox(height: 8),
+                Center(
+                  child: Text(
+                    'WE\'RE HERE FOR YOU',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ],
             ),
           ),
+
+          /*
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -287,31 +322,7 @@ class HomePageContent extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 20),
-          Stack(
-            children: [
-              Container(
-                width: double.infinity,
-                height: 200,
-                decoration: BoxDecoration(
-                  image: const DecorationImage(
-                    image: NetworkImage(
-                        'https://example.com/breast_cancer_awareness.jpg'),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              const Positioned(
-                bottom: 10,
-                left: 10,
-                child: Chip(
-                  label: Text('Awareness Campaign'),
-                  backgroundColor: Colors.pink,
-                ),
-              ),
-            ],
-          ),
+          */
           const SizedBox(height: 20),
           GridView.count(
             shrinkWrap: true,
@@ -325,7 +336,7 @@ class HomePageContent extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ClipRRect(
-                        child: Image.network(
+                        child: Image.asset(
                           imagesURLs[index],
                           fit: BoxFit.cover,
                           width: double.infinity,
