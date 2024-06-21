@@ -160,7 +160,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const HomePageContent(),
+      body: HomePageContent(),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
@@ -228,7 +228,25 @@ class InfoCard extends StatelessWidget {
 }
 
 class HomePageContent extends StatelessWidget {
-  const HomePageContent({super.key});
+  HomePageContent({super.key});
+
+  final List<String> imagesURLs = [
+    'images/self_examination.png',
+    'images/exercise.png',
+    'images/community.png',
+    'images/mindfulness.png',
+    'images/contacts.png',
+    'images/faqhome.png',
+  ];
+
+  final List<String> titles = [
+    'SELF EXAMINATION',
+    'DIET AND EXERCISE',
+    'COMMUNITY',
+    'MINDFULNESS',
+    'CONTACTS',
+    'FAQS',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -300,15 +318,31 @@ class HomePageContent extends StatelessWidget {
             crossAxisCount: 2,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
-            children: List.generate(4, (index) {
+            children: List.generate(6, (index) {
               return Container(
-                padding: const EdgeInsets.all(8.0),
-                color: Colors.pink[100 * (index + 2)],
-                child: Center(
-                  child: Text(
-                    'Item $index',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
+                color: Colors.pink,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ClipRRect(
+                        child: Image.network(
+                          imagesURLs[index],
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      titles[index],
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               );
             }),
