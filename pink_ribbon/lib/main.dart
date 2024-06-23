@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pink_ribbon/profile.dart';
+import 'package:pink_ribbon/about_us.dart';
+import 'package:pink_ribbon/community.dart';
 import 'package:pink_ribbon/contact.dart';
+import 'package:pink_ribbon/emergency.dart';
+import 'package:pink_ribbon/institutions.dart';
+import 'package:pink_ribbon/medication.dart';
 import 'package:pink_ribbon/self_examination.dart';
 
 void main() {
@@ -16,7 +20,7 @@ class _MyAppState extends State<MyApp> {
   int index = 0;
   List<Widget> list = [
     HomePage(),
-    Profile(),
+    AboutUs(),
     Contacts(),
     SelfExaminationScreen(),
   ];
@@ -46,6 +50,10 @@ class _MyAppState extends State<MyApp> {
       ),
       routes: {
         '/faq': (context) => FAQScreen(),
+        '/emergency': (context) => EmergencyScreen(),
+        '/institutions': (context) => InstitutionsScreen(),
+        '/medication': (context) => MedicationScreen(),
+        '/community': (context) => CommunityScreen(),
       },
     );
   }
@@ -138,7 +146,7 @@ class MyDrawer extends StatelessWidget {
             Divider(height: 1),
             ListTile(
               leading: Icon(Icons.person, color: Colors.pink),
-              title: Text('Profile'),
+              title: Text('AboutUs'),
               onTap: () => onTap(context, 1),
             ),
             Divider(height: 1),

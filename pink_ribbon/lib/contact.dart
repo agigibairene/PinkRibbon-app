@@ -54,7 +54,7 @@ class Contacts extends StatelessWidget {
                   InfoCard(
                     title: 'In your region',
                     text:
-                        'This map gives you an overview of the call centers and hotlines around your region.',
+                        'This map gives you an overview of the health centers, hospitals, and hotlines around your region.',
                   ),
                   InfoCard(
                     title: 'Institutions',
@@ -62,9 +62,9 @@ class Contacts extends StatelessWidget {
                         'Find an overview of counselling and support health services you can engage with.',
                   ),
                   InfoCard(
-                    title: 'Genetic Factors of Breast Cancer',
+                    title: 'Emergency contacts',
                     text:
-                        'Breast cancer is not necessarily genetic. It is a disease that occurs in the cells of the breast.',
+                        'List of people who can be reached in case of an emergency. You can also call them directly.',
                   ),
                   InfoCard(
                     title: 'Medication management resources',
@@ -115,6 +115,18 @@ class InfoCard extends StatelessWidget {
         ),
         trailing: Icon(Icons.chevron_right, color: Colors.white),
         onTap: () {
+          if (title == 'Emergency contacts') {
+            Navigator.pushNamed(context, '/emergency');
+          }
+          if (title == 'Institutions') {
+            Navigator.pushNamed(context, '/institutions');
+          }
+          if (title == 'Medication management resources') {
+            Navigator.pushNamed(context, '/medication');
+          }
+          if (title == 'Join a community') {
+            Navigator.pushNamed(context, '/community');
+          }
           // Add navigation logic her
         },
       ),
