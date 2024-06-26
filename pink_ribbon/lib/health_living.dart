@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pink_ribbon/main.dart';
+import 'main.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HealthyLiving extends StatelessWidget {
@@ -10,12 +10,6 @@ class HealthyLiving extends StatelessWidget {
         backgroundColor: Colors.white,
         title: Row(
           children: [
-            Container(
-              height: 40,
-              width: 40,
-              child: Image.asset('images/logo.png'),
-            ),
-            SizedBox(width: 10),
             Text(
               'HEALTHY LIVING',
               style: TextStyle(
@@ -45,8 +39,17 @@ class HealthyLiving extends StatelessWidget {
               child: Row(
                 children: [
                   SizedBox(width: 16),
+                  Container(
+                    margin:
+                        EdgeInsets.only(right: 20.0, bottom: 40.0, left: 20.0),
+                    child: Image.asset(
+                      'images/logo.png',
+                      width: 80,
+                      height: 80,
+                    ),
+                  ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'Pink Ribbon',
@@ -55,12 +58,14 @@ class HealthyLiving extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.pink,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                       Text(
                         'Breast health is in your hands.\nStay vigilant, stay informed!',
                         style: TextStyle(
                           color: Colors.white,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
@@ -69,7 +74,7 @@ class HealthyLiving extends StatelessWidget {
             ),
             _buildSection(
                 title: 'EXERCISE',
-                imageUrl: 'images/health-living1.png.png',
+                imageUrl: 'images/health-living1.png',
                 description:
                     'It has been scientifically proven that physical activity and exercise can significantly reduce the risk of certain types of cancer.'),
             _buildSection(
@@ -108,6 +113,7 @@ class HealthyLiving extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.pink, width: 2),
               borderRadius: BorderRadius.circular(10),
+              color: Colors.pink,
             ),
             child: Column(
               children: [
@@ -116,23 +122,21 @@ class HealthyLiving extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     description,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
-                TextButton(
+                ElevatedButton(
                   onPressed: () {},
                   child: Text(
                     'Tap to Discover',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
                   ),
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.pink,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(8),
-                        bottomRight: Radius.circular(8),
-                      ),
-                    ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                   ),
                 ),
               ],
@@ -150,7 +154,8 @@ class HealthyLiving extends StatelessWidget {
         onPressed: () {},
         child: Text(
           'LOAD MORE',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
         ),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.pink,

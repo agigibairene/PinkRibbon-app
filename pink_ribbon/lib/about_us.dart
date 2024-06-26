@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pink_ribbon/main.dart';
+import 'main.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AboutUs extends StatelessWidget {
@@ -26,6 +26,7 @@ class AboutUs extends StatelessWidget {
         child: Column(
           children: [
             _buildHeader(),
+            SizedBox(height: 26),
             _buildContent(),
             _buildSocialMediaIcons(),
           ],
@@ -37,7 +38,7 @@ class AboutUs extends StatelessWidget {
   Widget _buildHeader() {
     return Container(
       color: Colors.pink[100],
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(40.0),
       child: Column(
         children: [
           Image.asset('images/logo.png', height: 50),
@@ -71,7 +72,8 @@ class AboutUs extends StatelessWidget {
           Text(
             'OUR STORY',
             style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+            textAlign: TextAlign.center,
           ),
           SizedBox(height: 10),
           Text(
@@ -82,7 +84,8 @@ class AboutUs extends StatelessWidget {
           Text(
             'OUR CONTENT',
             style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+            textAlign: TextAlign.center,
           ),
           SizedBox(height: 10),
           Text(
@@ -93,7 +96,11 @@ class AboutUs extends StatelessWidget {
           Text(
             'OUR VALUES',
             style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+            textAlign: TextAlign.center,
           ),
           SizedBox(height: 10),
           Text(
