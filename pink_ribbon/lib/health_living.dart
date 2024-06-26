@@ -42,8 +42,8 @@ class HealthyLiving extends StatelessWidget {
                 children: [
                   const SizedBox(width: 16),
                   Container(
-                    margin:
-                        const EdgeInsets.only(right: 20.0, bottom: 40.0, left: 20.0),
+                    margin: const EdgeInsets.only(
+                        right: 20.0, bottom: 40.0, left: 20.0),
                     child: Image.asset(
                       'images/logo.png',
                       width: 80,
@@ -114,7 +114,7 @@ class HealthyLiving extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.pink, width: 2),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(0),
               color: Colors.pink,
             ),
             child: Column(
@@ -131,7 +131,8 @@ class HealthyLiving extends StatelessWidget {
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 10),
                   ),
                   child: const Text(
                     'Tap to Discover',
