@@ -69,11 +69,15 @@ class AboutUs extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
-          Text(
-            'OUR STORY',
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
-            textAlign: TextAlign.center,
+          Center(
+            child: Text(
+              'OUR STORY',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
           ),
           SizedBox(height: 10),
           Text(
@@ -81,11 +85,15 @@ class AboutUs extends StatelessWidget {
             style: TextStyle(fontSize: 16, color: Colors.white),
           ),
           SizedBox(height: 20),
-          Text(
-            'OUR CONTENT',
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
-            textAlign: TextAlign.center,
+          Center(
+            child: Text(
+              'OUR CONTENT',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
           ),
           SizedBox(height: 10),
           Text(
@@ -93,14 +101,16 @@ class AboutUs extends StatelessWidget {
             style: TextStyle(fontSize: 16, color: Colors.white),
           ),
           SizedBox(height: 20),
-          Text(
-            'OUR VALUES',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+          Center(
+            child: Text(
+              'OUR VALUES',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
           SizedBox(height: 10),
           Text(
