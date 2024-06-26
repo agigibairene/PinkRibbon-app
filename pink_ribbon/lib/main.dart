@@ -6,6 +6,7 @@ import 'package:pink_ribbon/emergency.dart';
 import 'package:pink_ribbon/institutions.dart';
 import 'package:pink_ribbon/medication.dart';
 import 'package:pink_ribbon/self_examination.dart';
+import 'package:pink_ribbon/health_living.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,6 +24,7 @@ class _MyAppState extends State<MyApp> {
     AboutUs(),
     Contacts(),
     SelfExaminationScreen(),
+    HealthyLiving(),
   ];
 
   @override
@@ -54,6 +56,8 @@ class _MyAppState extends State<MyApp> {
         '/institutions': (context) => InstitutionsScreen(),
         '/medication': (context) => MedicationScreen(),
         '/community': (context) => CommunityScreen(),
+        '/health-living': (context) => HealthyLiving(),
+        '/about-us': (context) => AboutUs()
       },
     );
   }

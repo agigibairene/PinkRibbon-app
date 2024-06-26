@@ -2,17 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:pink_ribbon/main.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AboutUs extends StatelessWidget {
+class HealthyLiving extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'ABOUT US',
-          style: TextStyle(color: Colors.pink),
-        ),
         backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.pink),
+        title: Row(
+          children: [
+            Container(
+              height: 40,
+              width: 40,
+              child: Image.asset('images/logo.png'),
+            ),
+            SizedBox(width: 10),
+            Text(
+              'HEALTHY LIVING',
+              style: TextStyle(
+                color: Colors.pink,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        iconTheme: IconThemeData(color: Colors.pink),
       ),
       drawer: MyDrawer(onTap: (ctx, i) {
         Navigator.pop(ctx);
@@ -25,8 +39,46 @@ class AboutUs extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _buildHeader(),
-            _buildContent(),
+            Container(
+              color: Colors.pink[100],
+              padding: EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  SizedBox(width: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Pink Ribbon',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.pink,
+                        ),
+                      ),
+                      Text(
+                        'Breast health is in your hands.\nStay vigilant, stay informed!',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            _buildSection(
+                title: 'EXERCISE',
+                imageUrl: 'images/health-living1.png.png',
+                description:
+                    'It has been scientifically proven that physical activity and exercise can significantly reduce the risk of certain types of cancer.'),
+            _buildSection(
+              title: 'NUTRITION',
+              imageUrl: 'images/health-living2.png',
+              description:
+                  'Eating a healthy, balanced diet can do a lot to improve your health and prevent diseases, including some cancers.',
+            ),
+            _buildLoadMoreButton(),
             _buildSocialMediaIcons(),
           ],
         ),
@@ -34,105 +86,108 @@ class AboutUs extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
-    return Container(
-      color: Colors.pink[100],
+  Widget _buildSection(
+      {required String title,
+      required String description,
+      required String imageUrl}) {
+    return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset('images/logo.png', height: 50),
-          const Text(
-            'Pink Ribbon',
+          Text(
+            title,
             style: TextStyle(
-                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.pink),
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.pink,
+            ),
           ),
-          const Text(
-            'Breast health is in your hands. Stay vigilant, stay informed!',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16, color: Colors.white),
-          ),
-          const Text(
-            'WHO WE ARE !',
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+          SizedBox(height: 8),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.pink, width: 2),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              children: [
+                Image.asset(imageUrl),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    description,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Tap to Discover',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.pink,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(8),
+                        bottomRight: Radius.circular(8),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildContent() {
-    return Container(
-      color: Colors.pink,
+  Widget _buildLoadMoreButton() {
+    return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text(
-            'OUR STORY',
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          SizedBox(height: 10),
-          Text(
-            'At Pink ribbon, we understand the challenges faced during and after breast cancer treatment. Inspired by one of own’s stories, we find strength to empower others and practical advice through our app.',
-            style: TextStyle(fontSize: 16, color: Colors.white),
-          ),
-          SizedBox(height: 20),
-          Text(
-            'OUR CONTENT',
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          SizedBox(height: 10),
-          Text(
-            'We update and review the content in our app on a weekly basis to ensure that our customers have accurate and up to date information.',
-            style: TextStyle(fontSize: 16, color: Colors.white),
-          ),
-          SizedBox(height: 20),
-          Text(
-            'OUR VALUES',
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          SizedBox(height: 10),
-          Text(
-            'EMPATHY\nSUPPORT\nEMPOWERMENT\nHOPE',
-            style: TextStyle(fontSize: 16, color: Colors.white),
-          ),
-        ],
+      child: ElevatedButton(
+        onPressed: () {},
+        child: Text(
+          'LOAD MORE',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.pink,
+          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+        ),
       ),
     );
   }
 
   Widget _buildSocialMediaIcons() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
-            icon: const Icon(FontAwesomeIcons.instagram),
+            icon: Icon(Icons.facebook),
             color: Colors.pink,
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.facebook),
+            icon: Icon(FontAwesomeIcons.twitter),
             color: Colors.pink,
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(FontAwesomeIcons.twitter),
+            icon: Icon(FontAwesomeIcons.instagram),
             color: Colors.pink,
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(FontAwesomeIcons.youtube),
+            icon: Icon(FontAwesomeIcons.youtube),
             color: Colors.pink,
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(FontAwesomeIcons.pinterest),
+            icon: Icon(FontAwesomeIcons.pinterest),
             color: Colors.pink,
             onPressed: () {},
           ),
