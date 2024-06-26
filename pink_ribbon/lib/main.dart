@@ -7,6 +7,7 @@ import 'package:pink_ribbon/institutions.dart';
 import 'package:pink_ribbon/medication.dart';
 import 'package:pink_ribbon/self_examination.dart';
 import 'package:pink_ribbon/health_living.dart';
+import 'package:pink_ribbon/blog.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +29,7 @@ class _MyAppState extends State<MyApp> {
     const Contacts(),
     const SelfExaminationScreen(),
     HealthyLiving(),
+    BlogScreen(),
   ];
 
   @override
@@ -136,7 +138,7 @@ class MyDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.library_books, color: Colors.pink),
               title: Text('Blogs'),
-              onTap: () => onTap(context, 0),
+              onTap: () => onTap(context, 5),
             ),
             Divider(height: 1),
             ListTile(
@@ -148,7 +150,7 @@ class MyDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.local_florist, color: Colors.pink),
               title: Text('Healthy Living'),
-              onTap: () => onTap(context, 0),
+              onTap: () => onTap(context, 4),
             ),
             Divider(height: 1),
             ListTile(

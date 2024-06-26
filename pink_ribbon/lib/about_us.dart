@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pink_ribbon/main.dart';
+import 'main.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AboutUs extends StatelessWidget {
@@ -26,6 +26,7 @@ class AboutUs extends StatelessWidget {
         child: Column(
           children: [
             _buildHeader(),
+            SizedBox(height: 26),
             _buildContent(),
             _buildSocialMediaIcons(),
           ],
@@ -37,7 +38,7 @@ class AboutUs extends StatelessWidget {
   Widget _buildHeader() {
     return Container(
       color: Colors.pink[100],
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(40.0),
       child: Column(
         children: [
           Image.asset('images/logo.png', height: 50),
@@ -64,41 +65,76 @@ class AboutUs extends StatelessWidget {
   Widget _buildContent() {
     return Container(
       color: Colors.pink,
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(40.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text(
-            'OUR STORY',
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Center(
+              child: const Text(
+                'OUR STORY',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
           SizedBox(height: 10),
-          Text(
-            'At Pink ribbon, we understand the challenges faced during and after breast cancer treatment. Inspired by one of own’s stories, we find strength to empower others and practical advice through our app.',
-            style: TextStyle(fontSize: 16, color: Colors.white),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: const Text(
+              'At Pink ribbon, we understand the challenges faced during and after breast cancer treatment. Inspired by one of own’s stories, we find strength to empower others and practical advice through our app.',
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
           ),
           SizedBox(height: 20),
-          Text(
-            'OUR CONTENT',
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Center(
+              child: const Text(
+                'OUR CONTENT',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
           SizedBox(height: 10),
-          Text(
-            'We update and review the content in our app on a weekly basis to ensure that our customers have accurate and up to date information.',
-            style: TextStyle(fontSize: 16, color: Colors.white),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: const Text(
+              'We update and review the content in our app on a weekly basis to ensure that our customers have accurate and up to date information.',
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
           ),
           SizedBox(height: 20),
-          Text(
-            'OUR VALUES',
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Center(
+              child: const Text(
+                'OUR VALUES',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
           SizedBox(height: 10),
-          Text(
-            'EMPATHY\nSUPPORT\nEMPOWERMENT\nHOPE',
-            style: TextStyle(fontSize: 16, color: Colors.white),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: const Text(
+              'EMPATHY\nSUPPORT\nEMPOWERMENT\nHOPE',
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
           ),
         ],
       ),
@@ -137,109 +173,6 @@ class AboutUs extends StatelessWidget {
             onPressed: () {},
           ),
         ],
-      ),
-    );
-  }
-}
-
-class MyDrawer extends StatelessWidget {
-  final Function onTap;
-
-  MyDrawer({required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.8,
-      child: Drawer(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.pink,
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(6),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      width: 60,
-                      height: 60,
-                      child: CircleAvatar(
-                          child: Icon(
-                        Icons.account_circle_sharp,
-                        size: 60,
-                        color: Colors.pink,
-                      )),
-                    ),
-                    SizedBox(height: 15),
-                    Text(
-                      'UserX',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    Text(
-                      'user@gmail.com',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.home, color: Colors.pink),
-              title: Text('Home'),
-              onTap: () => onTap(context, 0),
-            ),
-            Divider(height: 1),
-            ListTile(
-              leading: Icon(Icons.healing_outlined, color: Colors.pink),
-              title: Text('Self Examination'),
-              onTap: () => onTap(context, 3),
-            ),
-            Divider(height: 1),
-            ListTile(
-              leading: Icon(Icons.library_books, color: Colors.pink),
-              title: Text('Blogs'),
-              onTap: () => onTap(context, 0),
-            ),
-            Divider(height: 1),
-            ListTile(
-              leading: Icon(Icons.contact_phone, color: Colors.pink),
-              title: Text('Contacts and Specialists'),
-              onTap: () => onTap(context, 2),
-            ),
-            Divider(height: 1),
-            ListTile(
-              leading: Icon(Icons.local_florist, color: Colors.pink),
-              title: Text('Healthy Living'),
-              onTap: () => Navigator.pushNamed(context, '/healthy-living'),
-            ),
-            Divider(height: 1),
-            ListTile(
-              leading: Icon(Icons.person, color: Colors.pink),
-              title: Text('AboutUs'),
-              onTap: () => onTap(context, 1),
-            ),
-            Divider(height: 1),
-            ListTile(
-              leading: Icon(Icons.exit_to_app, color: Colors.pink),
-              title: Text('Logout'),
-              onTap: () => onTap(context, 0),
-            ),
-          ],
-        ),
       ),
     );
   }
