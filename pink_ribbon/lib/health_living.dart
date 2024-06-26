@@ -3,12 +3,14 @@ import 'main.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HealthyLiving extends StatelessWidget {
+  const HealthyLiving({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Row(
+        title: const Row(
           children: [
             Text(
               'HEALTHY LIVING',
@@ -20,13 +22,13 @@ class HealthyLiving extends StatelessWidget {
             ),
           ],
         ),
-        iconTheme: IconThemeData(color: Colors.pink),
+        iconTheme: const IconThemeData(color: Colors.pink),
       ),
       drawer: MyDrawer(onTap: (ctx, i) {
         Navigator.pop(ctx);
         Navigator.pushAndRemoveUntil(
           ctx,
-          MaterialPageRoute(builder: (ctx) => MyApp()),
+          MaterialPageRoute(builder: (ctx) => const MyApp()),
           (route) => false,
         );
       }),
@@ -35,20 +37,20 @@ class HealthyLiving extends StatelessWidget {
           children: [
             Container(
               color: Colors.pink[100],
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Container(
                     margin:
-                        EdgeInsets.only(right: 20.0, bottom: 40.0, left: 20.0),
+                        const EdgeInsets.only(right: 20.0, bottom: 40.0, left: 20.0),
                     child: Image.asset(
                       'images/logo.png',
                       width: 80,
                       height: 80,
                     ),
                   ),
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
@@ -102,13 +104,13 @@ class HealthyLiving extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.pink,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.pink, width: 2),
@@ -122,21 +124,21 @@ class HealthyLiving extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     description,
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
                 ElevatedButton(
                   onPressed: () {},
-                  child: Text(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                  ),
+                  child: const Text(
                     'Tap to Discover',
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                   ),
                 ),
               ],
@@ -152,14 +154,14 @@ class HealthyLiving extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: ElevatedButton(
         onPressed: () {},
-        child: Text(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.pink,
+          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+        ),
+        child: const Text(
           'LOAD MORE',
           style: TextStyle(
               fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
-        ),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.pink,
-          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
         ),
       ),
     );
@@ -172,27 +174,27 @@ class HealthyLiving extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
-            icon: Icon(Icons.facebook),
+            icon: const Icon(Icons.facebook),
             color: Colors.pink,
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(FontAwesomeIcons.twitter),
+            icon: const Icon(FontAwesomeIcons.twitter),
             color: Colors.pink,
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(FontAwesomeIcons.instagram),
+            icon: const Icon(FontAwesomeIcons.instagram),
             color: Colors.pink,
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(FontAwesomeIcons.youtube),
+            icon: const Icon(FontAwesomeIcons.youtube),
             color: Colors.pink,
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(FontAwesomeIcons.pinterest),
+            icon: const Icon(FontAwesomeIcons.pinterest),
             color: Colors.pink,
             onPressed: () {},
           ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'main.dart'; // Import main.dart to access MyDrawer
 
 class Contacts extends StatelessWidget {
@@ -30,7 +29,7 @@ class Contacts extends StatelessWidget {
         Navigator.pop(ctx); // Close the drawer
         Navigator.pushAndRemoveUntil(
           ctx,
-          MaterialPageRoute(builder: (ctx) => MyApp()), // Restart the app
+          MaterialPageRoute(builder: (ctx) => const MyApp()), // Restart the app
           (route) => false,
         );
       }),
@@ -90,18 +89,17 @@ class InfoCard extends StatelessWidget {
   final String title;
   final String text;
 
-  const InfoCard({required this.title, required this.text, Key? key})
-      : super(key: key);
+  const InfoCard({required this.title, required this.text, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Color.fromARGB(255, 218, 65, 116),
+      color: const Color.fromARGB(255, 218, 65, 116),
       margin: const EdgeInsets.all(10.0),
       child: ListTile(
         title: Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
@@ -110,10 +108,10 @@ class InfoCard extends StatelessWidget {
           padding: const EdgeInsets.only(top: 2.0),
           child: Text(
             text,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ),
-        trailing: Icon(Icons.chevron_right, color: Colors.white),
+        trailing: const Icon(Icons.chevron_right, color: Colors.white),
         onTap: () {
           if (title == 'Emergency contacts') {
             Navigator.pushNamed(context, '/emergency');

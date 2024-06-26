@@ -66,8 +66,8 @@ class ContactCard extends StatelessWidget {
     required this.location,
     required this.sessionsTime,
     required this.email,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

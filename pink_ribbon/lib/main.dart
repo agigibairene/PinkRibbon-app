@@ -24,10 +24,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int index = 0;
   List<Widget> list = [
-    const HomePage(),
+    HomePage(),
     AboutUs(),
-    const Contacts(),
-    const SelfExaminationScreen(),
+    Contacts(),
+    SelfExamination(),
     HealthyLiving(),
     BlogScreen(),
   ];
@@ -56,11 +56,11 @@ class _MyAppState extends State<MyApp> {
         }),
       ),
       routes: {
-        '/faq': (context) => const FAQScreen(),
-        '/emergency': (context) => const EmergencyScreen(),
-        '/institutions': (context) => const InstitutionsScreen(),
-        '/medication': (context) => const MedicationScreen(),
-        '/community': (context) => const CommunityScreen(),
+        '/faq': (context) => FAQScreen(),
+        '/emergency': (context) => EmergencyScreen(),
+        '/institutions': (context) => InstitutionsScreen(),
+        '/medication': (context) => MedicationScreen(),
+        '/community': (context) => CommunityScreen(),
         '/health-living': (context) => HealthyLiving(),
         '/about-us': (context) => AboutUs()
       },
@@ -81,7 +81,7 @@ class MyDrawer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            DrawerHeader(
+            const DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.pink,
               ),
@@ -91,7 +91,7 @@ class MyDrawer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       width: 60,
                       height: 60,
                       child: CircleAvatar(
@@ -124,44 +124,44 @@ class MyDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.home, color: Colors.pink),
-              title: Text('Home'),
+              leading: const Icon(Icons.home, color: Colors.pink),
+              title: const Text('Home'),
               onTap: () => onTap(context, 0),
             ),
-            Divider(height: 1),
+            const Divider(height: 1),
             ListTile(
-              leading: Icon(Icons.healing_outlined, color: Colors.pink),
-              title: Text('Self Examination'),
+              leading: const Icon(Icons.healing_outlined, color: Colors.pink),
+              title: const Text('Self Examination'),
               onTap: () => onTap(context, 3),
             ),
-            Divider(height: 1),
+            const Divider(height: 1),
             ListTile(
-              leading: Icon(Icons.library_books, color: Colors.pink),
-              title: Text('Blogs'),
+              leading: const Icon(Icons.library_books, color: Colors.pink),
+              title: const Text('Blogs'),
               onTap: () => onTap(context, 5),
             ),
-            Divider(height: 1),
+            const Divider(height: 1),
             ListTile(
-              leading: Icon(Icons.contact_phone, color: Colors.pink),
-              title: Text('Contacts and Specialists'),
+              leading: const Icon(Icons.contact_phone, color: Colors.pink),
+              title: const Text('Contacts and Specialists'),
               onTap: () => onTap(context, 2),
             ),
-            Divider(height: 1),
+            const Divider(height: 1),
             ListTile(
-              leading: Icon(Icons.local_florist, color: Colors.pink),
-              title: Text('Healthy Living'),
+              leading: const Icon(Icons.local_florist, color: Colors.pink),
+              title: const Text('Healthy Living'),
               onTap: () => onTap(context, 4),
             ),
-            Divider(height: 1),
+            const Divider(height: 1),
             ListTile(
-              leading: Icon(Icons.person, color: Colors.pink),
-              title: Text('AboutUs'),
+              leading: const Icon(Icons.person, color: Colors.pink),
+              title: const Text('AboutUs'),
               onTap: () => onTap(context, 1),
             ),
-            Divider(height: 1),
+            const Divider(height: 1),
             ListTile(
-              leading: Icon(Icons.exit_to_app, color: Colors.pink),
-              title: Text('Logout'),
+              leading: const Icon(Icons.exit_to_app, color: Colors.pink),
+              title: const Text('Logout'),
               onTap: () => onTap(context, 0),
             ),
           ],
@@ -197,8 +197,7 @@ class HomePage extends StatelessWidget {
           if (index == 1) {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => const SelfExaminationScreen()),
+              MaterialPageRoute(builder: (context) => const SelfExamination()),
             );
           }
         },
@@ -252,7 +251,8 @@ class HomePageContent extends StatelessWidget {
           ),
           Container(
             color: Colors.pink[300],
-            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -268,7 +268,7 @@ class HomePageContent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(
+                      margin: const EdgeInsets.only(
                           right: 20.0), // Adjust the value as needed
                       child: Image.asset(
                         'images/logo.png',
@@ -276,7 +276,7 @@ class HomePageContent extends StatelessWidget {
                         height: 80,
                       ),
                     ),
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -308,8 +308,8 @@ class HomePageContent extends StatelessWidget {
                     // Thick pink line divider
                   ),
                 ),
-                SizedBox(height: 8),
-                Center(
+                const SizedBox(height: 8),
+                const Center(
                   child: Text(
                     'WE\'RE HERE FOR YOU',
                     style: TextStyle(
@@ -361,7 +361,7 @@ class HomePageContent extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       titles[index],
                       style: const TextStyle(
@@ -409,7 +409,7 @@ class FAQScreen extends StatelessWidget {
         Navigator.pop(ctx); // Close the drawer
         Navigator.pushAndRemoveUntil(
           ctx,
-          MaterialPageRoute(builder: (ctx) => MyApp()), // Restart the app
+          MaterialPageRoute(builder: (ctx) => const MyApp()), // Restart the app
           (route) => false,
         );
       }),
@@ -486,19 +486,19 @@ class _FAQCardState extends State<FAQCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Color.fromARGB(255, 218, 65, 116),
+      color: const Color.fromARGB(255, 218, 65, 116),
       margin: const EdgeInsets.all(10.0),
       child: ExpansionTile(
         title: Text(
           widget.question,
-          style: TextStyle(color: Colors.black),
+          style: const TextStyle(color: Colors.black),
         ),
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               widget.answer,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         ],

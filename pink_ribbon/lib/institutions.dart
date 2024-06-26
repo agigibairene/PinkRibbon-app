@@ -78,8 +78,8 @@ class ContactCard extends StatelessWidget {
     required this.uniqueValue,
     required this.link,
     required this.rating,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -114,9 +114,9 @@ class ContactCard extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             InkWell(
-              child: Text(
+              child: const Text(
                 'Learn More',
-                style: const TextStyle(
+                style: TextStyle(
                     color: Colors.blue, decoration: TextDecoration.underline),
               ),
               onTap: () async {
@@ -131,25 +131,25 @@ class ContactCard extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               children: [
-                Text(
+                const Text(
                   'Rating:',
-                  style: const TextStyle(color: Colors.black54),
+                  style: TextStyle(color: Colors.black54),
                 ),
                 const SizedBox(width: 5),
                 Row(
                   children: List.generate(5, (index) {
                     if (index < fullStars) {
-                      return Icon(
+                      return const Icon(
                         Icons.star,
                         color: Colors.pink,
                       );
                     } else if (halfStar && index == fullStars) {
-                      return Icon(
+                      return const Icon(
                         Icons.star_half,
                         color: Colors.pink,
                       );
                     } else {
-                      return Icon(
+                      return const Icon(
                         Icons.star_border,
                         color: Colors.pink,
                       );

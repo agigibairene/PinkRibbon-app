@@ -3,6 +3,8 @@ import 'main.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AboutUs extends StatelessWidget {
+  const AboutUs({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +20,7 @@ class AboutUs extends StatelessWidget {
         Navigator.pop(ctx);
         Navigator.pushAndRemoveUntil(
           ctx,
-          MaterialPageRoute(builder: (ctx) => MyApp()),
+          MaterialPageRoute(builder: (ctx) => const MyApp()),
           (route) => false,
         );
       }),
@@ -26,7 +28,7 @@ class AboutUs extends StatelessWidget {
         child: Column(
           children: [
             _buildHeader(),
-            SizedBox(height: 26),
+            const SizedBox(height: 26),
             _buildContent(),
             _buildSocialMediaIcons(),
           ],
@@ -66,14 +68,14 @@ class AboutUs extends StatelessWidget {
     return Container(
       color: Colors.pink,
       padding: const EdgeInsets.all(40.0),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Center(
-              child: const Text(
+              child: Text(
                 'OUR STORY',
                 style: TextStyle(
                     fontSize: 18,
@@ -85,17 +87,17 @@ class AboutUs extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: const Text(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
               'At Pink ribbon, we understand the challenges faced during and after breast cancer treatment. Inspired by one of own’s stories, we find strength to empower others and practical advice through our app.',
               style: TextStyle(fontSize: 16, color: Colors.white),
             ),
           ),
           SizedBox(height: 20),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Center(
-              child: const Text(
+              child: Text(
                 'OUR CONTENT',
                 style: TextStyle(
                     fontSize: 18,
@@ -107,17 +109,17 @@ class AboutUs extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: const Text(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
               'We update and review the content in our app on a weekly basis to ensure that our customers have accurate and up to date information.',
               style: TextStyle(fontSize: 16, color: Colors.white),
             ),
           ),
           SizedBox(height: 20),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Center(
-              child: const Text(
+              child: Text(
                 'OUR VALUES',
                 style: TextStyle(
                   fontSize: 18,
@@ -130,8 +132,8 @@ class AboutUs extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: const Text(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
               'EMPATHY\nSUPPORT\nEMPOWERMENT\nHOPE',
               style: TextStyle(fontSize: 16, color: Colors.white),
             ),
