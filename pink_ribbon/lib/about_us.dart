@@ -65,57 +65,76 @@ class AboutUs extends StatelessWidget {
   Widget _buildContent() {
     return Container(
       color: Colors.pink,
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(40.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Center(
-            child: Text(
-              'OUR STORY',
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(height: 10),
-          Text(
-            'At Pink ribbon, we understand the challenges faced during and after breast cancer treatment. Inspired by one of own’s stories, we find strength to empower others and practical advice through our app.',
-            style: TextStyle(fontSize: 16, color: Colors.white),
-          ),
-          SizedBox(height: 20),
-          Center(
-            child: Text(
-              'OUR CONTENT',
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(height: 10),
-          Text(
-            'We update and review the content in our app on a weekly basis to ensure that our customers have accurate and up to date information.',
-            style: TextStyle(fontSize: 16, color: Colors.white),
-          ),
-          SizedBox(height: 20),
-          Center(
-            child: Text(
-              'OUR VALUES',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Center(
+              child: const Text(
+                'OUR STORY',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           ),
           SizedBox(height: 10),
-          Text(
-            'EMPATHY\nSUPPORT\nEMPOWERMENT\nHOPE',
-            style: TextStyle(fontSize: 16, color: Colors.white),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: const Text(
+              'At Pink ribbon, we understand the challenges faced during and after breast cancer treatment. Inspired by one of own’s stories, we find strength to empower others and practical advice through our app.',
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
+          ),
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Center(
+              child: const Text(
+                'OUR CONTENT',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: const Text(
+              'We update and review the content in our app on a weekly basis to ensure that our customers have accurate and up to date information.',
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
+          ),
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Center(
+              child: const Text(
+                'OUR VALUES',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: const Text(
+              'EMPATHY\nSUPPORT\nEMPOWERMENT\nHOPE',
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
           ),
         ],
       ),
