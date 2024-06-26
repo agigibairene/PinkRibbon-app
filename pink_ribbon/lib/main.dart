@@ -9,21 +9,24 @@ import 'package:pink_ribbon/self_examination.dart';
 import 'package:pink_ribbon/health_living.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   int index = 0;
   List<Widget> list = [
-    HomePage(),
+    const HomePage(),
     AboutUs(),
-    Contacts(),
-    SelfExaminationScreen(),
+    const Contacts(),
+    const SelfExaminationScreen(),
     HealthyLiving(),
   ];
 
@@ -34,7 +37,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         appBar: index == 0
             ? AppBar(
-                title: Text('Home',
+                title: const Text('Home',
                     style: TextStyle(
                       color: Colors.pink,
                       fontWeight: FontWeight.bold,
@@ -51,11 +54,11 @@ class _MyAppState extends State<MyApp> {
         }),
       ),
       routes: {
-        '/faq': (context) => FAQScreen(),
-        '/emergency': (context) => EmergencyScreen(),
-        '/institutions': (context) => InstitutionsScreen(),
-        '/medication': (context) => MedicationScreen(),
-        '/community': (context) => CommunityScreen(),
+        '/faq': (context) => const FAQScreen(),
+        '/emergency': (context) => const EmergencyScreen(),
+        '/institutions': (context) => const InstitutionsScreen(),
+        '/medication': (context) => const MedicationScreen(),
+        '/community': (context) => const CommunityScreen(),
         '/health-living': (context) => HealthyLiving(),
         '/about-us': (context) => AboutUs()
       },
@@ -66,7 +69,7 @@ class _MyAppState extends State<MyApp> {
 class MyDrawer extends StatelessWidget {
   final Function onTap;
 
-  MyDrawer({required this.onTap});
+  const MyDrawer({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
