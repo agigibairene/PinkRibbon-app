@@ -19,6 +19,7 @@ void main() async {
   FlutterNativeSplash.remove();
   runApp(const MyApp());
 }
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -244,146 +245,170 @@ class HomePageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return ListView(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Center(
-            child: Text(
-              'Welcome to PinkRibbon',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
+      children: [
+        const Center(
+          child: Text(
+            'Welcome to PinkRibbon',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          Container(
-            color: Colors.pink[300],
-            padding:
-                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(
-                    height: 4,
-                    width: 80,
-                    color: Colors.pink,
-                    // Thick pink line divider
-                  ),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(
-                          right: 20.0), // Adjust the value as needed
-                      child: Image.asset(
-                        'images/logo.png',
-                        width: 80,
-                        height: 80,
-                      ),
-                    ),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Pink Ribbon',
-                          style: TextStyle(
-                            color: Colors.pink,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Center(
-                          child: Text(
-                            'Breast health is in your hands.',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Center(
-                  child: Container(
-                    height: 4,
-                    width: 80,
-                    color: Colors.pink,
-                    // Thick pink line divider
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Center(
-                  child: Text(
-                    'WE\'RE HERE FOR YOU',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          /*
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        ),
+        Container(
+          color: Colors.pink[300],
+          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Learn More'),
+              Center(
+                child: Container(
+                  height: 4,
+                  width: 80,
+                  color: Colors.pink,
+                  // Thick pink line divider
+                ),
               ),
-              OutlinedButton(
-                onPressed: () {},
-                child: const Text('Donate'),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 20.0),
+                    child: Image.asset(
+                      'images/logo.png',
+                      width: 80,
+                      height: 80,
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Pink Ribbon',
+                        style: TextStyle(
+                          color: Colors.pink,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Center(
+                        child: Text(
+                          'Breast health is in your hands.',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Center(
+                child: Container(
+                  height: 4,
+                  width: 80,
+                  color: Colors.pink,
+                  // Thick pink line divider
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Center(
+                child: Text(
+                  'WE\'RE HERE FOR YOU',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),
-          */
-          const SizedBox(height: 20),
-          GridView.count(
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            children: List.generate(6, (index) {
-              return Container(
-                color: Colors.pink,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: ClipRRect(
-                        child: Image.asset(
-                          imagesURLs[index],
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
+        ),
+        const SizedBox(height: 20),
+        GridView.count(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          children: List.generate(6, (index) {
+            return GestureDetector(
+                onTap: () {
+                  navigateToPage(context, index);
+                },
+                child: Container(
+                  color: Colors.pink,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          child: Image.asset(
+                            imagesURLs[index],
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: double.infinity,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      titles[index],
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
+                      const SizedBox(height: 8),
+                      Text(
+                        titles[index],
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              );
-            }),
-          ),
-        ],
-      ),
+                    ],
+                  ),
+                ));
+          }),
+        ),
+      ],
     );
+  }
+}
+
+void navigateToPage(BuildContext context, int index) {
+  switch (index) {
+    case 0:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const SelfExamination()),
+      );
+      break;
+    case 1:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HealthyLiving()),
+      );
+      break;
+    case 2:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CommunityScreen()),
+      );
+      break;
+    case 3:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HealthyLiving()),
+      );
+      break;
+    case 4:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Contacts()),
+      );
+      break;
+    case 5:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const FAQScreen()),
+      );
+      break;
   }
 }
 

@@ -119,14 +119,6 @@ class ContactCard extends StatelessWidget {
                 style: TextStyle(
                     color: Colors.blue, decoration: TextDecoration.underline),
               ),
-              onTap: () async {
-                final url = Uri.parse(link);
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
-              },
             ),
             const SizedBox(height: 10),
             Row(
