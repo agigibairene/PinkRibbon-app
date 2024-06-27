@@ -19,6 +19,7 @@ class SelfExamination extends StatelessWidget {
                       padding: EdgeInsets.only(right: 30.0), // Adjusted margin to the right of the icon
                       child: Icon(Icons.menu),
                     ),
+                    
                     Text(
                       'Self Examination',
                       style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, color: Color(0xFFEC407A)),

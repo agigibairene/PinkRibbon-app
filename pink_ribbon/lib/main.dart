@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:pink_ribbon/about_us.dart';
 import 'package:pink_ribbon/community.dart';
 import 'package:pink_ribbon/contact.dart';
@@ -9,10 +10,15 @@ import 'package:pink_ribbon/self_examination.dart';
 import 'package:pink_ribbon/health_living.dart';
 import 'package:pink_ribbon/blog.dart';
 
-void main() {
+void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Future.delayed(
+    const Duration(seconds: 2),
+  );
+  FlutterNativeSplash.remove();
   runApp(const MyApp());
 }
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
