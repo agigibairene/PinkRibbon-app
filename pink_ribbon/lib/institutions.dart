@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class InstitutionsScreen extends StatelessWidget {
   const InstitutionsScreen({super.key});
@@ -113,8 +113,8 @@ class ContactCard extends StatelessWidget {
               style: const TextStyle(color: Colors.black54),
             ),
             const SizedBox(height: 10),
-            InkWell(
-              child: const Text(
+            const InkWell(
+              child: Text(
                 'Learn More',
                 style: TextStyle(
                     color: Colors.blue, decoration: TextDecoration.underline),

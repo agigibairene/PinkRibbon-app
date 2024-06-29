@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main.dart';
 
 class SelfExamination extends StatelessWidget {
   const SelfExamination({super.key});
@@ -6,27 +7,31 @@ class SelfExamination extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Self Examination'),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            color: const Color(0xFFEC407A),
+          ),
+        ),
+      ),
+      drawer: MyDrawer(onTap: (ctx, i) {
+        Navigator.pop(ctx);
+        Navigator.pushAndRemoveUntil(
+          ctx,
+          MaterialPageRoute(builder: (ctx) => const MyApp()),
+          (route) => false,
+        );
+      }), // Add the drawer here
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 30),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 30.0), // Adjusted margin to the right of the icon
-                      child: Icon(Icons.menu),
-                    ),
-                    
-                    Text(
-                      'Self Examination',
-                      style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, color: Color(0xFFEC407A)),
-                    ),
-                  ],
-                ),
-              ),
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
@@ -76,7 +81,7 @@ class SelfExamination extends StatelessWidget {
   Widget _content(BuildContext context, String label, String imagePath, String text) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: 30.0,
           child: Text(
             label,
@@ -88,7 +93,7 @@ class SelfExamination extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
-        SizedBox(width: 8.0),
+        const SizedBox(width: 8.0),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,13 +109,13 @@ class SelfExamination extends StatelessWidget {
       ],
     );
   }
-}
 
-bool isNumeric(String? value) {
-  if (value == null || value.isEmpty) {
-    return false;
+  bool isNumeric(String? value) {
+    if (value == null || value.isEmpty) {
+      return false;
+    }
+    
+    final numericRegex = RegExp(r'^-?\d+(?:\.\d+)?$');
+    return numericRegex.hasMatch(value);
   }
-  
-  final numericRegex = RegExp(r'^-?\d+(?:\.\d+)?$');
-  return numericRegex.hasMatch(value);
 }

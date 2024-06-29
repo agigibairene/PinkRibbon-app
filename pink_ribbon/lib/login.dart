@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:pink_ribbon/main.dart';
 import 'package:pink_ribbon/signup.dart';
+import 'main.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -10,21 +11,6 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.menu,
-            size: 20,
-            color: Colors.black,
-          ),
-        ),
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-      ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: double.infinity,
@@ -40,11 +26,10 @@ class LoginPage extends StatelessWidget {
                       Text(
                         "LOGIN",
                         style: TextStyle(
-                          fontSize: 30, 
+                          fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Colors.pink,
-                          ),
-                      
+                        ),
                       ),
                       SizedBox(height: 20),
                       Text(
@@ -52,7 +37,7 @@ class LoginPage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.black,
-                          fontWeight: FontWeight.bold
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
@@ -74,7 +59,12 @@ class LoginPage extends StatelessWidget {
                       child: MaterialButton(
                         minWidth: double.infinity,
                         height: 50,
-                        onPressed: () {},
+                          onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
+        },
                         color: const Color(0xFFEC407A),
                         elevation: 0,
                         shape: RoundedRectangleBorder(
@@ -112,7 +102,6 @@ class LoginPage extends StatelessWidget {
                       ),
                     ],
                   ),
-      
                 ],
               ),
             ),

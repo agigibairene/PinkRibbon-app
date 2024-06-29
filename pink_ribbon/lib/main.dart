@@ -5,6 +5,7 @@ import 'package:pink_ribbon/community.dart';
 import 'package:pink_ribbon/contact.dart';
 import 'package:pink_ribbon/emergency.dart';
 import 'package:pink_ribbon/institutions.dart';
+import 'package:pink_ribbon/login.dart';
 import 'package:pink_ribbon/medication.dart';
 import 'package:pink_ribbon/self_examination.dart';
 import 'package:pink_ribbon/health_living.dart';
@@ -37,6 +38,7 @@ class _MyAppState extends State<MyApp> {
     SelfExamination(),
     HealthyLiving(),
     BlogScreen(),
+    LoginPage(),
   ];
 
   @override
@@ -63,13 +65,15 @@ class _MyAppState extends State<MyApp> {
         }),
       ),
       routes: {
+        '/home': (context) => HomePage(),
         '/faq': (context) => FAQScreen(),
         '/emergency': (context) => EmergencyScreen(),
         '/institutions': (context) => InstitutionsScreen(),
         '/medication': (context) => MedicationScreen(),
         '/community': (context) => CommunityScreen(),
         '/health-living': (context) => HealthyLiving(),
-        '/about-us': (context) => AboutUs()
+        '/about-us': (context) => AboutUs(),
+        '/login': (context) => LoginPage(),
       },
     );
   }
@@ -168,8 +172,8 @@ class MyDrawer extends StatelessWidget {
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.exit_to_app, color: Colors.pink),
-              title: const Text('Logout'),
-              onTap: () => onTap(context, 0),
+              title: const Text('Login'),
+              onTap: () => onTap(context, 6),
             ),
           ],
         ),
