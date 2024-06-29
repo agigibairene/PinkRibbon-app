@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
         }),
       ),
       routes: {
-        '/home': (context) => HomePage(),
+        '/home': (context) => MyApp(),
         '/faq': (context) => FAQScreen(),
         '/emergency': (context) => EmergencyScreen(),
         '/institutions': (context) => InstitutionsScreen(),

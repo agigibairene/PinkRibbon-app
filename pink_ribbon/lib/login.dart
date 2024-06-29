@@ -46,9 +46,14 @@ class LoginPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: Column(
                       children: <Widget>[
-                        inputFile(label: "User Name", placeholder: "enter user name"),
-                        inputFile(label: "Email", placeholder: "example@gmail.com"),
-                        inputFile(label: "Password", obscureText: true, placeholder: "*******"),
+                        inputFile(
+                            label: "User Name", placeholder: "enter user name"),
+                        inputFile(
+                            label: "Email", placeholder: "example@gmail.com"),
+                        inputFile(
+                            label: "Password",
+                            obscureText: true,
+                            placeholder: "*******"),
                       ],
                     ),
                   ),
@@ -59,12 +64,13 @@ class LoginPage extends StatelessWidget {
                       child: MaterialButton(
                         minWidth: double.infinity,
                         height: 50,
-                          onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
-        },
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MyApp()),
+                          );
+                        },
                         color: const Color(0xFFEC407A),
                         elevation: 0,
                         shape: RoundedRectangleBorder(
@@ -84,12 +90,14 @@ class LoginPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      const Text("Don't have an account?", style: TextStyle(color: Colors.deepPurple)),
+                      const Text("Don't have an account?",
+                          style: TextStyle(color: Colors.deepPurple)),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const SignupPage()),
+                            MaterialPageRoute(
+                                builder: (context) => const SignupPage()),
                           );
                         },
                         child: const Text(
@@ -113,7 +121,10 @@ class LoginPage extends StatelessWidget {
 }
 
 // INPUT FIELD widget
-Widget inputFile({required String label, bool obscureText = false, required String placeholder}) {
+Widget inputFile(
+    {required String label,
+    bool obscureText = false,
+    required String placeholder}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -132,7 +143,8 @@ Widget inputFile({required String label, bool obscureText = false, required Stri
         obscureText: obscureText,
         decoration: InputDecoration(
           hintText: placeholder,
-          contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
