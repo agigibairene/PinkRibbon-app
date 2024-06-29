@@ -18,7 +18,7 @@ void main() async {
     const Duration(seconds: 2),
   );
   FlutterNativeSplash.remove();
-  runApp(const MyApp());
+  runApp(const LoginPage());
 }
 
 class MyApp extends StatefulWidget {
