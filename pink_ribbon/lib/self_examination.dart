@@ -8,7 +8,12 @@ class SelfExamination extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Self Examination'),
+        title: const Text('Self Examination',
+            style: TextStyle(
+              color: Colors.pink,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            )),
         leading: Builder(
           builder: (context) => IconButton(
             icon: const Icon(Icons.menu),
