@@ -13,7 +13,7 @@ class HealthyLiving extends StatelessWidget {
         title: const Row(
           children: [
             Text(
-              'HEALTHY LIVING',
+              'Healthy Living',
               style: TextStyle(
                 color: Colors.pink,
                 fontSize: 20,
