@@ -259,7 +259,7 @@ class HomePageContent extends StatelessWidget {
           ),
         ),
         Container(
-          color: Colors.pink[300],
+          color: Colors.pink[100],
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
