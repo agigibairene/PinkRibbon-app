@@ -11,9 +11,12 @@ class BlogScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'BLOGS',
-          style: TextStyle(color: Colors.pink),
-        ),
+          'Blogs',
+          style: TextStyle(
+            color: Colors.pink,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          )),
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.pink),
         leading: IconButton(
