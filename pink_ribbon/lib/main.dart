@@ -143,37 +143,67 @@ class MyDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.healing_outlined, color: Colors.pink),
               title: const Text('Self Examination'),
-              onTap: () => onTap(context, 3),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return SelfExamination();
+                }));
+              },
             ),
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.library_books, color: Colors.pink),
               title: const Text('Blogs'),
-              onTap: () => onTap(context, 5),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return BlogScreen();
+                }));
+              },
             ),
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.contact_phone, color: Colors.pink),
               title: const Text('Contacts and Specialists'),
-              onTap: () => onTap(context, 2),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return Contacts();
+                }));
+              },
             ),
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.local_florist, color: Colors.pink),
               title: const Text('Healthy Living'),
-              onTap: () => onTap(context, 4),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return HealthyLiving();
+                }));
+              },
             ),
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.person, color: Colors.pink),
               title: const Text('AboutUs'),
-              onTap: () => onTap(context, 1),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return AboutUs();
+                }));
+              },
             ),
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.exit_to_app, color: Colors.pink),
-              title: const Text('Login'),
-              onTap: () => onTap(context, 6),
+              title: const Text('Log Out'),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return LoginPage();
+                }));
+              },
             ),
           ],
         ),

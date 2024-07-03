@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'main.dart';
@@ -10,32 +9,32 @@ class BlogScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Blogs',
-          style: TextStyle(
-            color: Colors.pink,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          )),
+        title: const Text('Blogs',
+            style: TextStyle(
+              color: Colors.pink,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            )),
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.pink),
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            color: const Color(0xFFEC407A),
+          ),
         ),
       ),
-      drawer: MyDrawer(
-        onTap: (ctx, i) {
-          Navigator.pop(ctx);
-          Navigator.pushAndRemoveUntil(
-            ctx,
-            MaterialPageRoute(builder: (ctx) => const MyApp()),
-            (route) => false,
-          );
-        },
-      ),
+      drawer: MyDrawer(onTap: (ctx, i) {
+        Navigator.pop(ctx);
+        Navigator.pushAndRemoveUntil(
+          ctx,
+          MaterialPageRoute(builder: (ctx) => const MyApp()),
+          (route) => false,
+        );
+      }), //
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,8 +46,8 @@ class BlogScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Container(
-                    margin:
-                        const EdgeInsets.only(right: 20.0, bottom: 40.0, left: 20.0),
+                    margin: const EdgeInsets.only(
+                        right: 20.0, bottom: 40.0, left: 20.0),
                     child: Image.asset(
                       'images/logo.png',
                       width: 80,
@@ -137,7 +136,8 @@ class BlogPost extends StatelessWidget {
   final String imageUrl;
   final String description;
 
-  const BlogPost({super.key, required this.imageUrl, required this.description});
+  const BlogPost(
+      {super.key, required this.imageUrl, required this.description});
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +166,8 @@ class BlogPost extends StatelessWidget {
               onPressed: () {},
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
               ),
               child: const Text(
                 'Tap to Discover',
