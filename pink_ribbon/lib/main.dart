@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
             ? AppBar(
                 title: const Text('Home',
                     style: TextStyle(
-                      color: Colors.pink,
+                      color: Color.fromRGBO(233, 30, 99, 1),
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     )),
