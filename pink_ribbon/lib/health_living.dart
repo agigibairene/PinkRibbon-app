@@ -31,7 +31,7 @@ class HealthyLiving extends StatelessWidget {
           MaterialPageRoute(builder: (ctx) => const MyApp()),
           (route) => false,
         );
-      }),
+      }, username: '', userEmail: '',),
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -26,7 +26,7 @@ class SelfExamination extends StatelessWidget {
           MaterialPageRoute(builder: (ctx) => const MyApp()),
           (route) => false,
         );
-      }), // Add the drawer here
+      }, username: '', userEmail: '',), // Add the drawer here
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:pink_ribbon/about_us.dart';
@@ -10,70 +11,107 @@ import 'package:pink_ribbon/medication.dart';
 import 'package:pink_ribbon/self_examination.dart';
 import 'package:pink_ribbon/health_living.dart';
 import 'package:pink_ribbon/blog.dart';
+import 'package:firebase_core/firebase_core.dart';
+import './first_page.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Firebase.initializeApp();
   await Future.delayed(
     const Duration(seconds: 2),
   );
   FlutterNativeSplash.remove();
-  runApp(const LoginPage());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   int index = 0;
+  final User? user = FirebaseAuth.instance.currentUser;
+  String username = '';
+  String userEmail = '';
+
+  @override
+  void initState() {
+    super.initState();
+    if (user != null) {
+      setState(() {
+        username = user!.displayName ?? 'User';
+        userEmail = user!.email ?? 'user@gmail.com';
+      });
+    }
+  }
+
   List<Widget> list = [
-    HomePage(),
-    AboutUs(),
-    Contacts(),
-    SelfExamination(),
-    HealthyLiving(),
-    BlogScreen(),
-    LoginPage(),
+    const HomePage(),
+    const AboutUs(),
+    const Contacts(),
+    const SelfExamination(),
+    const HealthyLiving(),
+    const BlogScreen(),
+    const LoginPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: index == 0
-            ? AppBar(
-                title: const Text('Home',
-                    style: TextStyle(
-                      color: Colors.pink,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    )),
-              )
-            : null,
-        body: list[index],
-        drawer: MyDrawer(onTap: (ctx, i) {
-          setState(() {
-            index = i;
-            Navigator.pop(ctx);
-          });
-        }),
+
+      // BUGS
+
+      // home: Scaffold(
+      //   appBar: index == 0
+      //       ? AppBar(
+      //           title: const Text('Home',
+      //               style: TextStyle(
+      //                 color: Colors.pink,
+      //                 fontWeight: FontWeight.bold,
+      //                 fontSize: 20,
+      //               )),
+      //         )
+      //       : null,
+      //   body: list[index],
+      //   drawer: MyDrawer(
+      //     username: username,
+      //     userEmail: userEmail,
+      //     onTap: (ctx, i) {
+      //       setState(() {
+      //         index = i;
+      //         Navigator.pop(ctx);
+      //       });
+      //     },
+      //   ),
+      // ),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot){
+          if (snapshot.hasData){
+            return const MyApp();
+          }
+          else{
+            return const FirstPage();
+          }
+        },
       ),
+
+      
       routes: {
-        '/home': (context) => MyApp(),
-        '/faq': (context) => FAQScreen(),
-        '/emergency': (context) => EmergencyScreen(),
-        '/institutions': (context) => InstitutionsScreen(),
-        '/medication': (context) => MedicationScreen(),
-        '/community': (context) => CommunityScreen(),
-        '/health-living': (context) => HealthyLiving(),
-        '/about-us': (context) => AboutUs(),
-        '/login': (context) => LoginPage(),
+        '/home': (context) => const MyApp(),
+        '/faq': (context) => const FAQScreen(),
+        '/emergency': (context) => const EmergencyScreen(),
+        '/institutions': (context) => const InstitutionsScreen(),
+        '/medication': (context) => const MedicationScreen(),
+        '/community': (context) => const CommunityScreen(),
+        '/health-living': (context) => const HealthyLiving(),
+        '/about-us': (context) => const AboutUs(),
+        '/login': (context) => const LoginPage(),
       },
     );
   }
@@ -81,8 +119,15 @@ class _MyAppState extends State<MyApp> {
 
 class MyDrawer extends StatelessWidget {
   final Function onTap;
+  final String username;
+  final String userEmail;
 
-  const MyDrawer({super.key, required this.onTap});
+  const MyDrawer({
+    super.key,
+    required this.onTap,
+    required this.username,
+    required this.userEmail,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -92,17 +137,17 @@ class MyDrawer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
+            DrawerHeader(
+              decoration: const BoxDecoration(
                 color: Colors.pink,
               ),
               child: Padding(
-                padding: EdgeInsets.all(6),
+                padding: const EdgeInsets.all(6),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    SizedBox(
+                    const SizedBox(
                       width: 60,
                       height: 60,
                       child: CircleAvatar(
@@ -112,22 +157,25 @@ class MyDrawer extends StatelessWidget {
                         color: Colors.pink,
                       )),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Text(
-                      'UserX',
-                      style: TextStyle(
+                      username,
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Colors.white),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 3,
                     ),
-                    Text(
-                      'user@gmail.com',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white,
+                    Flexible(
+                      child: Text(
+                        userEmail,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.white,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ),
                   ],
@@ -166,7 +214,7 @@ class MyDrawer extends StatelessWidget {
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.person, color: Colors.pink),
-              title: const Text('AboutUs'),
+              title: const Text('About Us'),
               onTap: () => onTap(context, 1),
             ),
             const Divider(height: 1),
@@ -181,6 +229,7 @@ class MyDrawer extends StatelessWidget {
     );
   }
 }
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -283,7 +332,7 @@ class HomePageContent extends StatelessWidget {
                       height: 80,
                     ),
                   ),
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -296,7 +345,7 @@ class HomePageContent extends StatelessWidget {
                       ),
                       Center(
                         child: Text(
-                          'Breast health is in your hands.',
+                          'Your Breast health.',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 14,
@@ -333,7 +382,7 @@ class HomePageContent extends StatelessWidget {
         const SizedBox(height: 20),
         GridView.count(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 2,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
@@ -441,13 +490,13 @@ class FAQScreen extends StatelessWidget {
         ),
       ),
       drawer: MyDrawer(onTap: (ctx, i) {
-        Navigator.pop(ctx); // Close the drawer
+        Navigator.pop(ctx); 
         Navigator.pushAndRemoveUntil(
           ctx,
-          MaterialPageRoute(builder: (ctx) => const MyApp()), // Restart the app
+          MaterialPageRoute(builder: (ctx) => const MyApp()), 
           (route) => false,
         );
-      }),
+      }, username: '', userEmail: '',),
       body: SafeArea(
         child: ListView(
           children: [
@@ -514,6 +563,7 @@ class FAQCard extends StatefulWidget {
   const FAQCard({required this.question, required this.answer, super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _FAQCardState createState() => _FAQCardState();
 }
 

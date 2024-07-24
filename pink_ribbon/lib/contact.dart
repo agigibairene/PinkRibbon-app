@@ -32,7 +32,7 @@ class Contacts extends StatelessWidget {
           MaterialPageRoute(builder: (ctx) => const MyApp()), // Restart the app
           (route) => false,
         );
-      }),
+      }, username: '', userEmail: '',),
       body: SafeArea(
         child: ListView(
           children: [
