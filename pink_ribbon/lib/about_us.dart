@@ -9,10 +9,12 @@ class AboutUs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'ABOUT US',
-          style: TextStyle(color: Colors.pink),
-        ),
+        title: const Text('About Us ',
+            style: TextStyle(
+              color: Colors.pink,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            )),
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.pink),
       ),
