@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:pink_ribbon/about_us.dart';
-import 'package:pink_ribbon/community.dart';
+import 'package:pink_ribbon/services/authentication.dart';
+import './about_us.dart';
+import './community.dart';
 import 'package:pink_ribbon/contact.dart';
 import 'package:pink_ribbon/emergency.dart';
 import 'package:pink_ribbon/institutions.dart';
@@ -34,21 +35,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int index = 0;
-  final User? user = FirebaseAuth.instance.currentUser;
-  String username = '';
-  String userEmail = '';
-
-  @override
-  void initState() {
-    super.initState();
-    if (user != null) {
-      setState(() {
-        username = user!.displayName ?? 'User';
-        userEmail = user!.email ?? 'user@gmail.com';
-      });
-    }
-  }
-
   List<Widget> list = [
     const HomePage(),
     const AboutUs(),
@@ -63,46 +49,29 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
-      // BUGS
-
-      // home: Scaffold(
-      //   appBar: index == 0
-      //       ? AppBar(
-      //           title: const Text('Home',
-      //               style: TextStyle(
-      //                 color: Colors.pink,
-      //                 fontWeight: FontWeight.bold,
-      //                 fontSize: 20,
-      //               )),
-      //         )
-      //       : null,
-      //   body: list[index],
-      //   drawer: MyDrawer(
-      //     username: username,
-      //     userEmail: userEmail,
-      //     onTap: (ctx, i) {
-      //       setState(() {
-      //         index = i;
-      //         Navigator.pop(ctx);
-      //       });
-      //     },
-      //   ),
-      // ),
-      home: StreamBuilder(
+      home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot){
-          if (snapshot.hasData){
-            return const MyApp();
-          }
-          else{
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator(); // Show a loading indicator while waiting for the authentication state.
+          } else if (snapshot.hasData) {
+            return MainPage(
+              onTap: (ctx, i) {
+                setState(() {
+                  index = i;
+                });
+                Navigator.pop(ctx); // Close the drawer
+              },
+              currentIndex: index,
+              child: list[index],
+            );
+          } else {
             return const FirstPage();
           }
         },
       ),
-      
       routes: {
-        '/home': (context) => const MyApp(),
+        '/home': (context) => const HomePage(),
         '/faq': (context) => const FAQScreen(),
         '/emergency': (context) => const EmergencyScreen(),
         '/institutions': (context) => const InstitutionsScreen(),
@@ -116,20 +85,51 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+class MainPage extends StatelessWidget {
+  final Function(BuildContext, int) onTap;
+  final int currentIndex;
+  final Widget child;
+
+  const MainPage({
+    required this.onTap,
+    required this.currentIndex,
+    required this.child,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: currentIndex == 0
+          ? AppBar(
+              title: const Text('Home',
+                  style: TextStyle(
+                    color: Colors.pink,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  )),
+            )
+          : null, 
+      body: child,
+      drawer: MyDrawer(onTap: onTap, username: '', userEmail: ''),
+    );
+  }
+}
+
 class MyDrawer extends StatelessWidget {
   final Function onTap;
-  final String username;
-  final String userEmail;
 
   const MyDrawer({
     super.key,
-    required this.onTap,
-    required this.username,
-    required this.userEmail,
+    required this.onTap, required String username, required String userEmail,
   });
 
   @override
   Widget build(BuildContext context) {
+    final User? user = FirebaseAuth.instance.currentUser;
+    final String username = user?.displayName ?? 'User';
+    final String userEmail = user?.email ?? 'user@gmail.com';
+
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
       child: Drawer(
@@ -219,8 +219,15 @@ class MyDrawer extends StatelessWidget {
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.exit_to_app, color: Colors.pink),
-              title: const Text('Login'),
-              onTap: () => onTap(context, 6),
+              title: const Text('Log Out'),
+              onTap: () async {
+                await AuthMethod().signOut();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FirstPage()),
+                  (route) => false,
+                );
+              },
             ),
           ],
         ),
@@ -228,7 +235,6 @@ class MyDrawer extends StatelessWidget {
     );
   }
 }
-
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -489,10 +495,10 @@ class FAQScreen extends StatelessWidget {
         ),
       ),
       drawer: MyDrawer(onTap: (ctx, i) {
-        Navigator.pop(ctx); 
+        Navigator.pop(ctx);
         Navigator.pushAndRemoveUntil(
           ctx,
-          MaterialPageRoute(builder: (ctx) => const MyApp()), 
+          MaterialPageRoute(builder: (ctx) => const MyApp()),
           (route) => false,
         );
       }, username: '', userEmail: '',),

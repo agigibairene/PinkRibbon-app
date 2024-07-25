@@ -4,7 +4,6 @@ import 'package:pink_ribbon/login.dart';
 import 'package:pink_ribbon/services/authentication.dart';
 import './services/snackbar.dart';
 import './services/google.dart';
-import 'main.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -18,7 +17,7 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final _authService = AuthService();
+  final _authService = AuthMethod();
   bool isLoading = false;
   bool isSigningIn = false;
 
@@ -30,58 +29,66 @@ class _SignupPageState extends State<SignupPage> {
     super.dispose();
   }
 
-   void signupUser() async {
-    // set is loading to true.
-    setState(() {
-      isLoading = true;
-    });
-    // signup user using our authmethod
-    String res = await AuthMethod().signupUser(
+  void signupUser() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      setState(() {
+        isLoading = true; // Start loading
+      });
+
+      String res = await _authService.signupUser(
         email: emailController.text,
         password: passwordController.text,
-        name: nameController.text);
-    // if string return is success, user has been creaded and navigate to next screen other witse show error.
-    if (res == "success") {
-      setState(() {
-        isLoading = false;
-      });
-      //navigate to the next screen
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const MyApp(),
-        ),
+        name: nameController.text,
       );
-    } else {
+
       setState(() {
-        isLoading = false;
+        isLoading = false; // Stop loading
       });
-      // show error
-      showSnackBar(context, res);
+
+      if (res == "success") {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("Signed up successfully"),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+        await Future.delayed(const Duration(seconds: 2));
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const LoginPage(),
+          ),
+        );
+      } else {
+        showSnackBar(context, res); // Show error message
+      }
     }
   }
+
   void _signInWithGoogle() async {
     setState(() {
-      isSigningIn = true;
+      isSigningIn = true; 
     });
-    User? user = await _authService.signInWithGoogle();
+
+    User? user = await AuthService().signInWithGoogle();
+
+    setState(() {
+      isSigningIn = false; 
+    });
+
     if (user != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const MyApp(),
+          builder: (context) => const LoginPage(),
         ),
       );
     } else {
-      setState(() {
-        isSigningIn = false;
-      });
-      showSnackBar(context, "Google sign-in failed");
+      showSnackBar(context, "Google sign-in failed"); // Show error message
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -93,11 +100,11 @@ class _SignupPageState extends State<SignupPage> {
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
+              children: [
                 const Padding(
                   padding: EdgeInsets.only(top: 40),
                   child: Column(
-                    children: <Widget>[
+                    children: [
                       Text(
                         "SIGN UP",
                         style: TextStyle(
@@ -119,7 +126,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                 ),
                 Column(
-                  children: <Widget>[
+                  children: [
                     inputFile(
                       label: "User Name",
                       placeholder: "Enter your name",
@@ -178,27 +185,29 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 Container(
                   padding: const EdgeInsets.only(top: 3, left: 3),
-                  child: isLoading ? const CircularProgressIndicator(): MaterialButton(
-                    minWidth: double.infinity,
-                    height: 50,
-                    onPressed: signupUser,
-                    color: const Color(0xFFEC407A),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: const Text(
-                      "Sign up",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                  child: isLoading
+                      ? const CircularProgressIndicator()
+                      : MaterialButton(
+                          minWidth: double.infinity,
+                          height: 50,
+                          onPressed: signupUser,
+                          color: const Color(0xFFEC407A),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Text(
+                            "Sign up",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                 ),
                 Row(
-                  children: const <Widget>[
+                  children: const [
                     Expanded(
                       child: Divider(
                         thickness: 1,
@@ -217,39 +226,41 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 Container(
                   padding: const EdgeInsets.only(top: 4, left: 3),
-                  child: isSigningIn ? const CircularProgressIndicator(): MaterialButton(
-                    minWidth: double.infinity,
-                    height: 50,
-                    onPressed: _signInWithGoogle,
-                    color: Colors.blue,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image(
-                          image: AssetImage('images/google_logo.png'),
-                          height: 24.0,
-                          width: 24.0,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          "Continue with Google",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                            color: Colors.white,
+                  child: isSigningIn
+                      ? const CircularProgressIndicator()
+                      : MaterialButton(
+                          minWidth: double.infinity,
+                          height: 50,
+                          onPressed: _signInWithGoogle,
+                          color: Colors.blue,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image(
+                                image: AssetImage('images/google_logo.png'),
+                                height: 24.0,
+                                width: 24.0,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                "Continue with Google",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
+                  children: [
                     const Text(
                       "Already have an account?",
                       style: TextStyle(color: Colors.deepPurple),
@@ -280,44 +291,44 @@ class _SignupPageState extends State<SignupPage> {
       ),
     );
   }
-}
 
-// INPUT FIELD widget
-Widget inputFile({
-  required String label,
-  bool obscureText = false,
-  required String placeholder,
-  TextEditingController? controller,
-  FormFieldValidator<String>? validator,
-}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        label,
-        style: const TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w400,
-          color: Colors.black87,
-        ),
-      ),
-      const SizedBox(height: 5),
-      TextFormField(
-        controller: controller,
-        obscureText: obscureText,
-        validator: validator,
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
+  // INPUT FIELD widget
+  Widget inputFile({
+    required String label,
+    bool obscureText = false,
+    required String placeholder,
+    TextEditingController? controller,
+    FormFieldValidator? validator,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            color: Colors.black87,
           ),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
-          ),
-          hintText: placeholder,
         ),
-      ),
-      const SizedBox(height: 10),
-    ],
-  );
+        const SizedBox(height: 5),
+        TextFormField(
+          controller: controller,
+          obscureText: obscureText,
+          validator: validator,
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            hintText: placeholder,
+          ),
+        ),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
 }

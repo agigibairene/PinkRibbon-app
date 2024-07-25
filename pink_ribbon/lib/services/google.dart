@@ -2,53 +2,29 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
-  final auth = FirebaseAuth.instance;
-  final googleSignIn = GoogleSignIn();
-  // dont't gorget to add firebasea auth and google sign in package
-  signInWithGoogle() async {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  Future<User?> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
+      final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
       if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
+        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
         final AuthCredential authCredential = GoogleAuthProvider.credential(
           accessToken: googleSignInAuthentication.accessToken,
           idToken: googleSignInAuthentication.idToken,
         );
-        await auth.signInWithCredential(authCredential);
+        final UserCredential userCredential = await auth.signInWithCredential(authCredential);
+        return userCredential.user;
       }
-    } on FirebaseAuthException catch (e) {
+    } catch (e) {
       print(e.toString());
     }
+    return null;
   }
 
-// for sign out
-  googleSignOut() async {
+  Future<void> googleSignOut() async {
     await googleSignIn.signOut();
-    auth.signOut();
+    await auth.signOut();
   }
 }
-
-
-// class AuthService {
-//   final _auth = FirebaseAuth.instance;
-
-//   Future<UserCredential?> loginWithGoogle() async {
-//     try{
-//       final googleUser =  await GoogleSignIn().signIn();
-//       final googleAuth = await googleUser?.authentication;
-//       final cred = GoogleAuthProvider.credential(idToken: googleAuth?.idToken, accessToken: googleAuth?.accessToken);
-      
-//       return await _auth.signInWithCredential(cred);
-//     }
-//     catch (e){
-//       print(e.toString());
-//     }
-//     return null;
-    
-//   }
-
-  
-// }
-

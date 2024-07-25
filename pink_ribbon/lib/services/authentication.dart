@@ -6,7 +6,7 @@ class AuthMethod {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // Sign up user
- Future<String> signupUser({
+  Future<String> signupUser({
     required String email,
     required String password,
     required String name,
@@ -45,18 +45,24 @@ class AuthMethod {
   }
 
   // Log in user
-  Future<String> loginUser({
+  Future<Map<String, dynamic>> loginUser({
     required String email,
     required String password,
   }) async {
     String res = "Some error occurred";
+    Map<String, dynamic> userData = {};
+
     try {
       if (email.isNotEmpty && password.isNotEmpty) {
         // Logging in user with email and password
-        await _auth.signInWithEmailAndPassword(
+        UserCredential cred = await _auth.signInWithEmailAndPassword(
           email: email,
           password: password,
         );
+
+        // Retrieve user data from Firestore
+        DocumentSnapshot userDoc = await _firestore.collection('users').doc(cred.user!.uid).get();
+        userData = userDoc.data() as Map<String, dynamic>;
         res = "success";
       } else {
         res = "Please enter all the fields";
@@ -70,7 +76,9 @@ class AuthMethod {
     } catch (err) {
       res = err.toString();
     }
-    return res;
+    
+    userData['status'] = res; // Add status to the returned data
+    return userData;
   }
 
   // Get user data

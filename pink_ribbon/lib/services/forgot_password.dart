@@ -60,7 +60,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         "Forgot Your Password",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                          fontSize: 16,
                         ),
                       ),
                       IconButton(
