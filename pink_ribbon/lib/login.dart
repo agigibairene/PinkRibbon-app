@@ -8,6 +8,8 @@ import './services/snackbar.dart';
 import './services/google.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -17,7 +19,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController usernameController = TextEditingController(); // Added
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final FocusNode _emailFocusNode = FocusNode();
@@ -32,7 +33,6 @@ class _LoginPageState extends State<LoginPage> {
     _passwordFocusNode.dispose();
     emailController.dispose();
     passwordController.dispose();
-    usernameController.dispose(); // Added
     super.dispose();
   }
 
@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
       isLoading = true;
     });
 
-    Map<String, dynamic> res = await AuthMethod().loginUser(
+    String res = await AuthMethod().loginUser(
       email: emailController.text,
       password: passwordController.text
     );
@@ -67,23 +67,24 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _loginWithGoogle() async {
-    setState(() {
-      isSigningIn = true;
-    });
+  setState(() {
+    isSigningIn = true;
+  });
 
-    try {
-      await _auth.signInWithGoogle();
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyApp()));
-    } on FirebaseAuthException catch (e) {
-      showSnackBar(context, e.message ?? 'An error occurred');
-    } catch (e) {
-      showSnackBar(context, 'An unexpected error occurred');
-    } finally {
-      setState(() {
-        isSigningIn = false;
-      });
-    }
+  try {
+    await _auth.signInWithGoogle();
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyApp()));
+  } on FirebaseAuthException catch (e) {
+    showSnackBar(context, e.message ?? 'An error occurred');
+  } catch (e) {
+    showSnackBar(context, 'An unexpected error occurred');
+  } finally {
+    setState(() {
+      isSigningIn = false;
+    });
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -130,17 +131,6 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             children: <Widget>[
                               inputFile(
-                                label: "Username", 
-                                placeholder: "Enter your name",
-                                controller: usernameController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter a username';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              inputFile(
                                 label: "Email",
                                 placeholder: "example@gmail.com",
                                 controller: emailController,
@@ -163,10 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                             ],
                           ),
                         ),
-                        
                       ),
-                      
-                      const ForgotPassword(),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 40),
                         child: Container(
@@ -191,28 +178,28 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Divider(
-                              thickness: 1,
-                              indent: 20, // Added padding to the left
-                              endIndent: 20, // Added padding to the right
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 3, left: 3),
-                            child: Text("Or continue with"),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 1,
-                              indent: 20, // Added padding to the left
-                              endIndent: 20, // Added padding to the right
-                            ),
-                          ),
-                        ],
+                      const ForgotPassword(),
+                     Row(
+                      // padding: const EdgeInsets.only(top: 3, left: 3)
+                  children: const <Widget>[
+                    
+                    Expanded(
+                      
+                      child: Divider(
+                        thickness: 1,
                       ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 3, left: 3),
+                      child: Text("Or continue with"),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        thickness: 1,
+                      ),
+                    ),
+                  ],
+                ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 40),
                         child: Container(
