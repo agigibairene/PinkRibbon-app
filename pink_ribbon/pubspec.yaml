@@ -43,6 +43,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   firebaseapis: ^0.2.0
   firebase_storage: ^12.1.1
+  fluttertoast: ^8.2.6
 
 dev_dependencies:
   flutter_test:

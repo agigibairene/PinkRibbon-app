@@ -15,7 +15,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 35),
+      padding: const EdgeInsets.only(left: 35, right: 35, top: 0),
       child: Align(
         alignment: Alignment.centerRight,
         child: InkWell(
@@ -89,11 +89,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           .sendPasswordResetEmail(email: emailController.text)
                           .then((value) {
                         // if success then show this message
-                        showSnackBar(context,
+                        showToast(
                             "We have send you the reset password link to your email id, Please check it");
                       }).onError((error, stackTrace) {
                         // if unsuccess then show error message
-                        showSnackBar(context, error.toString());
+                        showToast(error.toString());
                       });
                       // terminate the dialog after send the forgot password link
                       Navigator.pop(context);

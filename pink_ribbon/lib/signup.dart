@@ -46,12 +46,13 @@ class _SignupPageState extends State<SignupPage> {
       });
 
       if (res == "success") {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text("Signed up successfully"),
-            duration: const Duration(seconds: 2),
-          ),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     content: const Text("Signed up successfully"),
+        //     duration: const Duration(seconds: 2),
+        //   ),
+        // );
+        showToast( "Signed up successfully");
         await Future.delayed(const Duration(seconds: 2));
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
@@ -59,7 +60,7 @@ class _SignupPageState extends State<SignupPage> {
           ),
         );
       } else {
-        showSnackBar(context, res); // Show error message
+        showToast( res); // Show error message
       }
     }
   }
@@ -82,7 +83,7 @@ class _SignupPageState extends State<SignupPage> {
         ),
       );
     } else {
-      showSnackBar(context, "Google sign-in failed"); // Show error message
+      showToast( "Google sign-in failed"); // Show error message
     }
   }
 

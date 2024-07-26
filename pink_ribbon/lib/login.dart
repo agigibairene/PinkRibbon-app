@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pink_ribbon/first_page.dart';
 import 'package:pink_ribbon/main.dart';
 import 'package:pink_ribbon/services/forgot_password.dart';
 import 'package:pink_ribbon/signup.dart';
@@ -59,10 +58,10 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     } else {
-      // showSnackBar(context, res);
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const FirstPage()),
-      );
+      showToast(res);
+      // Navigator.of(context).pushReplacement(
+      //   MaterialPageRoute(builder: (context) => const FirstPage()),
+      // );
     }
   }
 
@@ -75,9 +74,9 @@ class _LoginPageState extends State<LoginPage> {
     await _auth.signInWithGoogle();
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyApp()));
   } on FirebaseAuthException catch (e) {
-    showSnackBar(context, e.message ?? 'An error occurred');
+    showToast( e.message ?? 'An error occurred');
   } catch (e) {
-    showSnackBar(context, 'An unexpected error occurred');
+    showToast('An unexpected error occurred');
   } finally {
     setState(() {
       isSigningIn = false;
@@ -179,27 +178,28 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       const ForgotPassword(),
-                     Row(
-                      // padding: const EdgeInsets.only(top: 3, left: 3)
-                  children: const <Widget>[
-                    
-                    Expanded(
-                      
-                      child: Divider(
-                        thickness: 1,
-                      ),
-                    ),
                     Padding(
-                      padding: EdgeInsets.only(top: 3, left: 3),
-                      child: Text("Or continue with"),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        thickness: 1,
-                      ),
-                    ),
-                  ],
-                ),
+                          padding: const EdgeInsets.symmetric(horizontal: 30.0), 
+                          child: Row(
+                            children: const <Widget>[
+                              Expanded(
+                                child: Divider(
+                                  thickness: 1,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Text("Or continue with"),
+                              ),
+                              Expanded(
+                                child: Divider(
+                                  thickness: 1,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 40),
                         child: Container(
@@ -225,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                       SizedBox(width: 10),
                                       Text(
-                                        "SignIn with Google",
+                                        "Google",
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 18,
