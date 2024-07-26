@@ -109,7 +109,7 @@ class MainPage extends StatelessWidget {
                     fontSize: 20,
                   )),
             )
-          : null, 
+          : null,
       body: child,
       drawer: MyDrawer(onTap: onTap, username: '', userEmail: ''),
     );
@@ -121,7 +121,9 @@ class MyDrawer extends StatelessWidget {
 
   const MyDrawer({
     super.key,
-    required this.onTap, required String username, required String userEmail,
+    required this.onTap,
+    required String username,
+    required String userEmail,
   });
 
   @override
@@ -190,31 +192,56 @@ class MyDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.healing_outlined, color: Colors.pink),
               title: const Text('Self Examination'),
-              onTap: () => onTap(context, 3),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return SelfExamination();
+                }));
+              },
             ),
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.library_books, color: Colors.pink),
               title: const Text('Blogs'),
-              onTap: () => onTap(context, 5),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return BlogScreen();
+                }));
+              },
             ),
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.contact_phone, color: Colors.pink),
               title: const Text('Contacts and Specialists'),
-              onTap: () => onTap(context, 2),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return Contacts();
+                }));
+              },
             ),
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.local_florist, color: Colors.pink),
               title: const Text('Healthy Living'),
-              onTap: () => onTap(context, 4),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return HealthyLiving();
+                }));
+              },
             ),
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.person, color: Colors.pink),
               title: const Text('About Us'),
-              onTap: () => onTap(context, 1),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return AboutUs();
+                }));
+              },
             ),
             const Divider(height: 1),
             ListTile(
@@ -313,7 +340,7 @@ class HomePageContent extends StatelessWidget {
           ),
         ),
         Container(
-          color: Colors.pink[300],
+          color: Colors.pink[100],
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -494,14 +521,18 @@ class FAQScreen extends StatelessWidget {
           ),
         ),
       ),
-      drawer: MyDrawer(onTap: (ctx, i) {
-        Navigator.pop(ctx);
-        Navigator.pushAndRemoveUntil(
-          ctx,
-          MaterialPageRoute(builder: (ctx) => const MyApp()),
-          (route) => false,
-        );
-      }, username: '', userEmail: '',),
+      drawer: MyDrawer(
+        onTap: (ctx, i) {
+          Navigator.pop(ctx);
+          Navigator.pushAndRemoveUntil(
+            ctx,
+            MaterialPageRoute(builder: (ctx) => const MyApp()),
+            (route) => false,
+          );
+        },
+        username: '',
+        userEmail: '',
+      ),
       body: SafeArea(
         child: ListView(
           children: [
