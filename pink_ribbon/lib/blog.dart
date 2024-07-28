@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'main.dart';
 
 class BlogScreen extends StatelessWidget {
@@ -167,7 +168,7 @@ class BlogPost extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: _launchURL,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 padding:
@@ -186,5 +187,13 @@ class BlogPost extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _launchURL() async {
+    final Uri url = Uri.parse(
+        'https://www.medicalnewstoday.com/articles/marijuana-breast-cancer');
+    if (!await launchUrl(url)) {
+      throw 'Could not launch $url';
+    }
   }
 }
