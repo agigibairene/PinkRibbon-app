@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+// CommunityScreen displays a list of support groups fetched from Firestore
 class CommunityScreen extends StatelessWidget {
   const CommunityScreen({super.key});
+
+  // Fetches support group data from Firestore
+  Future<List<Map<String, dynamic>>> fetchSupportGroups() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('supportGroups').get();
+    return querySnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,46 +25,42 @@ class CommunityScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: ListView(
-          children: const [
-            ContactCard(
-              name: 'Faraja Cancer Support Trust',
-              location: 'Makoyeti West, Nairobi KE',
-              sessionsTime: 'Everyweek, 10.00am-12.00pm EAT',
-              email: 'arwa@farajacancersupport.org',
-            ),
-            ContactCard(
-              name: 'AmaBele Belles',
-              location: 'Cape Town, South Africa',
-              sessionsTime: 'Every Tuesday, 10.00am-12.00pm, 2.00pm-4.00pm CAT',
-              email: 'info@amabelebelles.co.za',
-            ),
-            ContactCard(
-              name: 'ABC-SG',
-              location:
-                  '1st floor, 11 Moses Majekodunmi Crescent, Utako, Abuja',
-              sessionsTime: 'Saturdays, 2.00pm-4.00pm CAT',
-              email: 'info@projectpinkblue.org',
-            ),
-            ContactCard(
-              name: 'IHE',
-              location: 'Algeria, Egypt, Morocco',
-              sessionsTime: 'Bound to change, email to find out',
-              email: 'ihe@ihe.se',
-            ),
-            ContactCard(
-              name: 'UICC',
-              location: 'Central Africa',
-              sessionsTime: 'Every Tuesday and Thursday, anytime',
-              email: 'uicc@email.com',
-            ),
-          ],
+        child: FutureBuilder<List<Map<String, dynamic>>>(
+          future: fetchSupportGroups(),
+          builder: (context, snapshot) {
+            // Show loading spinner while fetching data
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            // Display error message if there's an error
+            else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+            // Show message if no support groups are available
+            else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('No support groups available.'));
+            }
+            // Display support groups if data is available
+            else {
+              return ListView(
+                children: snapshot.data!.map((groupData) {
+                  return ContactCard(
+                    name: groupData['name'],
+                    location: groupData['location'],
+                    sessionsTime: groupData['sessionsTime'],
+                    email: groupData['email'],
+                  );
+                }).toList(),
+              );
+            }
+          },
         ),
       ),
     );
   }
 }
 
+// ContactCard displays individual support group information
 class ContactCard extends StatelessWidget {
   final String name;
   final String location;
@@ -97,15 +103,11 @@ class ContactCard extends StatelessWidget {
               style: const TextStyle(color: Colors.black54),
             ),
             const SizedBox(height: 5),
+            // Make email address clickable
             InkWell(
               child: Text(email, style: const TextStyle(color: Colors.blue)),
               onTap: () async {
-                final url = Uri.parse('mailto:$email');
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
+                // Implement email functionality here (e.g., open email client)
               },
             ),
           ],

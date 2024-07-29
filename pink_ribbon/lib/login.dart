@@ -7,8 +7,6 @@ import './services/snackbar.dart';
 import './services/google.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -43,9 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     String res = await AuthMethod().loginUser(
-      email: emailController.text,
-      password: passwordController.text
-    );
+        email: emailController.text, password: passwordController.text);
 
     setState(() {
       isLoading = false;
@@ -66,24 +62,24 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _loginWithGoogle() async {
-  setState(() {
-    isSigningIn = true;
-  });
-
-  try {
-    await _auth.signInWithGoogle();
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyApp()));
-  } on FirebaseAuthException catch (e) {
-    showToast( e.message ?? 'An error occurred');
-  } catch (e) {
-    showToast('An unexpected error occurred');
-  } finally {
     setState(() {
-      isSigningIn = false;
+      isSigningIn = true;
     });
-  }
-}
 
+    try {
+      await _auth.signInWithGoogle();
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const MyApp()));
+    } on FirebaseAuthException catch (e) {
+      showToast(e.message ?? 'An error occurred');
+    } catch (e) {
+      showToast('An unexpected error occurred');
+    } finally {
+      setState(() {
+        isSigningIn = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,28 +174,27 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       const ForgotPassword(),
-                    Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0), 
-                          child: Row(
-                            children: const <Widget>[
-                              Expanded(
-                                child: Divider(
-                                  thickness: 1,
-                                ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Row(
+                          children: const <Widget>[
+                            Expanded(
+                              child: Divider(
+                                thickness: 1,
                               ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                                child: Text("Or continue with"),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Text("Or continue with"),
+                            ),
+                            Expanded(
+                              child: Divider(
+                                thickness: 1,
                               ),
-                              Expanded(
-                                child: Divider(
-                                  thickness: 1,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 40),
                         child: Container(
@@ -219,7 +214,8 @@ class _LoginPageState extends State<LoginPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Image(
-                                        image: AssetImage('images/google_logo.png'),
+                                        image: AssetImage(
+                                            'images/google_logo.png'),
                                         height: 24.0,
                                         width: 24.0,
                                       ),
@@ -248,7 +244,8 @@ class _LoginPageState extends State<LoginPage> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const SignupPage()),
+                                MaterialPageRoute(
+                                    builder: (context) => const SignupPage()),
                               );
                             },
                             child: const Text(
@@ -324,7 +321,8 @@ Widget inputFile({
         focusNode: focusNode,
         decoration: InputDecoration(
           hintText: placeholder,
-          contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),

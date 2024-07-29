@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pink_ribbon/services/authentication.dart';
 import './about_us.dart';
 import './community.dart';
@@ -16,13 +17,14 @@ import 'package:firebase_core/firebase_core.dart';
 import './first_page.dart';
 
 void main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding
+      .ensureInitialized(); // Preserve the splash screen while initializing
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp();
   await Future.delayed(
-    const Duration(seconds: 2),
+    const Duration(seconds: 2), // Delay to show splash screen
   );
-  FlutterNativeSplash.remove();
+  FlutterNativeSplash.remove(); // Remove splash screen after initialization
   runApp(const MyApp());
 }
 
@@ -109,7 +111,7 @@ class MainPage extends StatelessWidget {
                     fontSize: 20,
                   )),
             )
-          : null,
+          : null, // Show AppBar only on the Home page
       body: child,
       drawer: MyDrawer(onTap: onTap, username: '', userEmail: ''),
     );
@@ -307,151 +309,190 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class HomePageContent extends StatelessWidget {
-  HomePageContent({super.key});
+class HomePageContent extends StatefulWidget {
+  const HomePageContent({super.key});
 
-  final List<String> imagesURLs = [
-    'images/self_examination.png',
-    'images/exercise.png',
-    'images/community.png',
-    'images/mindfulness.png',
-    'images/contacts.png',
-    'images/faqhome.png',
-  ];
+  @override
+  _HomePageContentState createState() => _HomePageContentState();
+}
 
-  final List<String> titles = [
-    'SELF EXAMINATION',
-    'DIET AND EXERCISE',
-    'COMMUNITY',
-    'MINDFULNESS',
-    'CONTACTS',
-    'FAQS',
-  ];
+class _HomePageContentState extends State<HomePageContent> {
+  late Future<List<Map<String, String>>> _imagesFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _imagesFuture = fetchImages();
+  }
+
+  Future<List<Map<String, String>>> fetchImages() async {
+    final collection = FirebaseFirestore.instance.collection('images');
+    final querySnapshot = await collection.get();
+
+    // Debugging line to check the number of documents
+    print('Fetched ${querySnapshot.docs.length} images from Firestore');
+
+    return querySnapshot.docs.map((doc) {
+      final data = doc.data() as Map<String, dynamic>;
+      final url = data['url'] as String;
+      print('Image URL: $url'); // Debugging line
+      return {
+        'url': url,
+        'title': doc.id.toUpperCase(),
+      };
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16.0),
-      children: [
-        const Center(
-          child: Text(
-            'Welcome to PinkRibbon',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-        ),
-        Container(
-          color: Colors.pink[100],
-          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Container(
-                  height: 4,
-                  width: 80,
-                  color: Colors.pink,
-                  // Thick pink line divider
-                ),
+    return FutureBuilder<List<Map<String, String>>>(
+      future: _imagesFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(child: Text('No images found.'));
+        }
+
+        final images = snapshot.data!;
+
+        // Debugging line to ensure we have the right number of images
+        print('Number of images to display: ${images.length}');
+
+        return ListView(
+          padding: const EdgeInsets.all(16.0),
+          children: [
+            const Center(
+              child: Text(
+                'Welcome to PinkRibbon',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+            ),
+            Container(
+              color: Colors.pink[100],
+              padding:
+                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 20.0),
-                    child: Image.asset(
-                      'images/logo.png',
+                  Center(
+                    child: Container(
+                      height: 4,
                       width: 80,
-                      height: 80,
+                      color: Colors.pink,
                     ),
                   ),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        'Pink Ribbon',
-                        style: TextStyle(
-                          color: Colors.pink,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                      Container(
+                        margin: const EdgeInsets.only(right: 20.0),
+                        child: Image.asset(
+                          'images/logo.png',
+                          width: 80,
+                          height: 80,
                         ),
                       ),
-                      Center(
-                        child: Text(
-                          'Your Breast health.',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Pink Ribbon',
+                            style: TextStyle(
+                              color: Colors.pink,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
+                          Center(
+                            child: Text(
+                              'Your Breast health.',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
+                  ),
+                  Center(
+                    child: Container(
+                      height: 4,
+                      width: 80,
+                      color: Colors.pink,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Center(
+                    child: Text(
+                      'WE\'RE HERE FOR YOU',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ],
               ),
-              Center(
-                child: Container(
-                  height: 4,
-                  width: 80,
-                  color: Colors.pink,
-                  // Thick pink line divider
-                ),
+            ),
+            const SizedBox(height: 20),
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
               ),
-              const SizedBox(height: 8),
-              const Center(
-                child: Text(
-                  'WE\'RE HERE FOR YOU',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 20),
-        GridView.count(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          children: List.generate(6, (index) {
-            return GestureDetector(
-                onTap: () {
-                  navigateToPage(context, index);
-                },
-                child: Container(
-                  color: Colors.pink,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ClipRRect(
-                          child: Image.asset(
-                            imagesURLs[index],
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: double.infinity,
+              itemCount: images.length,
+              itemBuilder: (context, index) {
+                final image = images[index];
+                return GestureDetector(
+                  onTap: () {
+                    navigateToPage(context, index);
+                  },
+                  child: Container(
+                    color: Colors.pink,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            child: Image.asset(
+                              '${image['url']}',
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Center(
+                                    child: Text('Error loading image'));
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        titles[index],
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
+                        const SizedBox(height: 8),
+                        Text(
+                          image['title']!,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ));
-          }),
-        ),
-      ],
+                );
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -461,37 +502,37 @@ void navigateToPage(BuildContext context, int index) {
     case 0:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const SelfExamination()),
+        MaterialPageRoute(builder: (context) => const CommunityScreen()),
       );
       break;
     case 1:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const HealthyLiving()),
+        MaterialPageRoute(builder: (context) => const Contacts()),
       );
       break;
     case 2:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const CommunityScreen()),
+        MaterialPageRoute(builder: (context) => const HealthyLiving()),
       );
       break;
     case 3:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const HealthyLiving()),
+        MaterialPageRoute(builder: (context) => const FAQScreen()),
       );
       break;
     case 4:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const Contacts()),
+        MaterialPageRoute(builder: (context) => const HealthyLiving()),
       );
       break;
     case 5:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const FAQScreen()),
+        MaterialPageRoute(builder: (context) => const SelfExamination()),
       );
       break;
   }
