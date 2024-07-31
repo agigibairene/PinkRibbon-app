@@ -44,6 +44,7 @@ dependencies:
   firebaseapis: ^0.2.0
   firebase_storage: ^12.1.1
   fluttertoast: ^8.2.6
+  mockito: ^5.4.4
 
 dev_dependencies:
   flutter_test:
